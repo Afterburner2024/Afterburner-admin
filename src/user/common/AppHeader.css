@@ -1,0 +1,58 @@
+.app-header {
+    height: 60px;
+    background-color: black;
+    position: relative;
+    z-index: 10;
+    display: flex; /* flexbox로 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: space-between; /* 로고와 로그아웃 버튼을 양쪽 끝으로 배치 */
+    padding: 0 20px; /* 양쪽에 약간의 패딩 추가 */
+}
+
+.app-branding {
+    display: flex;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 1.35em;
+    margin-left: 10px; /* 로고와 텍스트 사이의 간격 */
+    color: white;
+}
+
+.app-options {
+    display: flex;
+    align-items: center;
+}
+
+.app-nav ul {
+    list-style-position: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* 가로 정렬 */
+}
+
+.app-nav ul li {
+    list-style-type: none;
+    margin-left: 15px; /* 목록 아이템 간 간격 */
+}
+
+.app-nav ul li a,
+.logout-button {
+    color: rgba(255, 255, 255, 0.8); /* 텍스트 색상 흰색으로 설정 */
+    line-height: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+.app-nav ul li a:hover,
+.logout-button:hover {
+    color: #0f96f6;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    margin-right: 10px; /* 로고와 텍스트 사이 간격 조정 */
+}
