@@ -9,19 +9,15 @@ const AdminLayout: React.FC = () => {
   const { logout } = useAuth();
   const [isSidebarOpen, toggleSidebar] = useToggle(true);
   return (
-    <div className="flex h-screen bg-gray-50">
-      <Sidebar
-        isOpen={isSidebarOpen}
-        onClose={toggleSidebar}
-        onLogout={logout}
-      />
-      <div
-        className={`flex-1 flex flex-col overflow-hidden transition-all ${
-          isSidebarOpen ? "md:ml-64" : "md:ml-0"
-        }`}
-      >
-        <Header />
-        <main className="p-6 overflow-auto">
+    <div className="flex flex-col h-screen bg-gray-50">
+      <Header onToggleSidebar={toggleSidebar} />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onClose={toggleSidebar}
+          onLogout={logout}
+        />
+        <main className="flex-1 p-6 overflow-auto">
           <Outlet />
         </main>
       </div>

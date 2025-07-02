@@ -9,9 +9,12 @@ interface Props {
 
 export const Sidebar: React.FC<Props> = ({ isOpen, onClose, onLogout }) => (
   <>
-    <div
-      className={`fixed inset-y-0 left-0 w-64 bg-indigo-800 text-white transform 
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} transition`}
+    <aside
+      className={`
+        bg-indigo-800 text-white w-64 flex-shrink-0 transition-all duration-300
+        fixed inset-y-0 left-0 z-30 transform md:relative md:translate-x-0
+        ${isOpen ? 'translate-x-0' : '-translate-x-full md:-ml-64'}
+      `}
     >
       <div className="p-4 border-b border-indigo-700">
         <h2 className="text-2xl font-bold">AfterBurnner</h2>
@@ -45,13 +48,14 @@ export const Sidebar: React.FC<Props> = ({ isOpen, onClose, onLogout }) => (
           <span>로그아웃</span>
         </button>
       </div>
-    </div>
-    {/* 모바일에서 닫기 버튼 */}
-    <button
-      onClick={onClose}
-      className="fixed top-4 left-4 p-2 bg-white rounded-md md:hidden"
-    >
-      <i className={`fas ${isOpen ? "fa-times" : "fa-bars"}`}></i>
-    </button>
+    </aside>
+
+    {/* Mobile overlay */}
+    {isOpen && (
+      <div
+        className="fixed inset-0 z-20 bg-black opacity-50 md:hidden"
+        onClick={onClose}
+      ></div>
+    )}
   </>
 );
