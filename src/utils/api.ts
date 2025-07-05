@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 api.interceptors.request.use((config) => {
@@ -22,5 +22,11 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Generic fetch function
+export const fetcher = async (url: string) => {
+    const res = await api.get(url);
+    return res.data;
+}
 
 export default api;
