@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import { useSearchAndSort } from '../hooks/useSearchAndSort';
+import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import type { StudyGroup } from '../types/api';
+import { mockStudyGroups } from '../utils/mockData';
 
 // 정렬 옵션
 const sortOptions = [
@@ -16,22 +14,19 @@ const sortOptions = [
 ];
 
 const StudyGroupsPage: React.FC = () => {
-  const { data: studyGroups, isLoading, error } = useQuery<StudyGroup[], Error>({
-    queryKey: ['studyGroups'],
-    queryFn: () => fetcher('/api/v1/study-group'),
-    refetchInterval: 5 * 60 * 1000, // 5분
-  });
-
-  // 검색 및 정렬 훅 사용
   const { 
+    data: filteredAndSortedData, 
+    isLoading, 
+    error, 
     searchQuery, 
     setSearchQuery, 
     sortOption, 
-    setSortOption, 
-    filteredAndSortedData 
-  } = useSearchAndSort<StudyGroup>({ 
-    initialData: studyGroups || [], 
-    searchFields: ['title', 'content'] 
+    setSortOption 
+  } = useDataFetching<StudyGroup>({
+    queryKey: ['studyGroups'],
+    endpoint: '/api/v1/study-group',
+    searchFields: ['title', 'content'],
+    mockData: mockStudyGroups,
   });
 
   if (isLoading) return <div>로딩 중...</div>;

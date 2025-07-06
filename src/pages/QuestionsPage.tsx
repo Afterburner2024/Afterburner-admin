@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import { useSearchAndSort } from '../hooks/useSearchAndSort';
+import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import type { Question } from '../types/api';
+import { mockQuestions } from '../utils/mockData';
 
 // 정렬 옵션
 const sortOptions = [
@@ -16,23 +14,19 @@ const sortOptions = [
 ];
 
 const QuestionsPage: React.FC = () => {
-  // React Query를 사용하여 질문 목록을 가져옵니다.
-  const { data: questions, isLoading, error } = useQuery<Question[], Error>({
-    queryKey: ['questions'],
-    queryFn: () => fetcher('/api/v1/questions'), // 백엔드 API 엔드포인트
-    refetchInterval: 5 * 60 * 1000, // 5분
-  });
-
-  // 검색 및 정렬 훅 사용
   const { 
+    data: filteredAndSortedData, 
+    isLoading, 
+    error, 
     searchQuery, 
     setSearchQuery, 
     sortOption, 
-    setSortOption, 
-    filteredAndSortedData 
-  } = useSearchAndSort<Question>({ 
-    initialData: questions || [], 
-    searchFields: ['title', 'content', 'author'] 
+    setSortOption 
+  } = useDataFetching<Question>({
+    queryKey: ['questions'],
+    endpoint: '/api/v1/questions',
+    searchFields: ['title', 'content', 'author'],
+    mockData: mockQuestions,
   });
 
   if (isLoading) return <div>로딩 중...</div>;

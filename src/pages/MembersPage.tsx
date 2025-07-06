@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import { useSearchAndSort } from '../hooks/useSearchAndSort';
+import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import type { Member } from '../types/api';
+import { mockMembers } from '../utils/mockData';
 
 // 정렬 옵션
 const sortOptions = [
@@ -16,22 +14,19 @@ const sortOptions = [
 ];
 
 const MembersPage: React.FC = () => {
-  const { data: members, isLoading, error } = useQuery<Member[], Error>({
-    queryKey: ['members'],
-    queryFn: () => fetcher('/api/v1/members'),
-    refetchInterval: 5 * 60 * 1000, // 5분
-  });
-
-  // 검색 및 정렬 훅 사용
   const { 
+    data: filteredAndSortedData, 
+    isLoading, 
+    error, 
     searchQuery, 
     setSearchQuery, 
     sortOption, 
-    setSortOption, 
-    filteredAndSortedData 
-  } = useSearchAndSort<Member>({ 
-    initialData: members || [], 
-    searchFields: ['name', 'email'] 
+    setSortOption 
+  } = useDataFetching<Member>({
+    queryKey: ['members'],
+    endpoint: '/api/v1/members',
+    searchFields: ['name', 'email'],
+    mockData: mockMembers,
   });
 
   if (isLoading) return <div>로딩 중...</div>;

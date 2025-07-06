@@ -23,7 +23,6 @@ api.interceptors.response.use(
   }
 );
 
-// Generic fetch function
 export const fetcher = async (url: string) => {
     const res = await api.get(url);
     return res.data;

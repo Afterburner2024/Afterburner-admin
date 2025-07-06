@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import { useSearchAndSort } from '../hooks/useSearchAndSort';
+import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import type { Project } from '../types/api';
+import { mockProjects } from '../utils/mockData';
 
 // 정렬 옵션
 const sortOptions = [
@@ -16,22 +14,19 @@ const sortOptions = [
 ];
 
 const ProjectsPage: React.FC = () => {
-  const { data: projects, isLoading, error } = useQuery<Project[], Error>({
-    queryKey: ['projects'],
-    queryFn: () => fetcher('/api/v1/project'),
-    refetchInterval: 5 * 60 * 1000, // 5분
-  });
-
-  // 검색 및 정렬 훅 사용
   const { 
+    data: filteredAndSortedData, 
+    isLoading, 
+    error, 
     searchQuery, 
     setSearchQuery, 
     sortOption, 
-    setSortOption, 
-    filteredAndSortedData 
-  } = useSearchAndSort<Project>({ 
-    initialData: projects || [], 
-    searchFields: ['title', 'content'] 
+    setSortOption 
+  } = useDataFetching<Project>({
+    queryKey: ['projects'],
+    endpoint: '/api/v1/project',
+    searchFields: ['title', 'content'],
+    mockData: mockProjects,
   });
 
   if (isLoading) return <div>로딩 중...</div>;
