@@ -1,6 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { LoginPage } from './components/LoginPage';
+import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
@@ -13,30 +12,11 @@ import QuestionDetailPage from './pages/QuestionDetailPage';
 import MembersPage from './pages/MembersPage';
 import MemberDetailPage from './pages/MemberDetailPage';
 import AdminLayout from './layouts/AdminLayout';
-import { useAuth } from './hooks/useAuth';
-
-const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-  const { isLoggedIn } = useAuth();
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-};
 
 const AppRoutes: React.FC = () => {
-  const { login } = useAuth();
-  const handleLogin = () => login('dummy-token');
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-      <Route
-        path="/*"
-        element={
-          <RequireAuth>
-            <AdminLayout />
-          </RequireAuth>
-        }
-      >
+      <Route path="/" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="projects" element={<ProjectsPage />} />
         <Route path="projects/:id" element={<ProjectDetailPage />} />

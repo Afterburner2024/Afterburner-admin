@@ -1,4 +1,3 @@
-
 import type { Member, Notice, Project, StudyGroup, Question } from '../types/api';
 
 export const mockMembers: Member[] = [

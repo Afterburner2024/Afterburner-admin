@@ -12,6 +12,8 @@
   "dependencies": {
     "@tanstack/react-query": "^5.81.5",
     "axios": "^1.6.8",
+    "firebase": "^11.10.0",
+    "firebaseui": "^6.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^6.23.0",
