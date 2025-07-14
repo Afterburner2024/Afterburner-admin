@@ -4,6 +4,7 @@ export interface Member {
   name: string;
   email: string;
   signupDate: string;
+  status: '활성' | '비활성';
 }
 
 // 공지사항 정보 타입
@@ -12,6 +13,7 @@ export interface Notice {
   title: string;
   content: string;
   createdAt: string; 
+  important: boolean; // 중요 공지 여부
 }
 
 // 프로젝트 정보 타입
@@ -20,6 +22,8 @@ export interface Project {
   title: string;
   content: string;
   createdAt: string;
+  author: string;
+  views: number;
 }
 
 // 스터디 그룹 정보 타입
@@ -28,6 +32,8 @@ export interface StudyGroup {
   title: string;
   content: string;
   createdAt: string; 
+  author: string;
+  memberCount: number;
 }
 
 // 질문 정보 타입

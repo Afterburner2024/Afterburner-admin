@@ -8,11 +8,13 @@ import { mockProjects } from '../utils/mockData';
 export const RecentProjectsTable: React.FC = () => {
   const { data: projects, error } = useQuery<Project[], Error>({
     queryKey: ['recent-projects'],
-    queryFn: () => fetcher('/api/v1/project?sort=createdAt-desc&limit=5'),
+    queryFn: () =>
+      fetcher('/api/v1/project?sort=createdAt-desc&limit=5')
+        .then((res: { data: Project[] }) => res.data), 
   });
 
   const data = error ? mockProjects : (projects || []);
-
+  
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-4">
