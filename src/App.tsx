@@ -4,7 +4,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from './utils/firebase';
 import AppRoutes from './routes';
 import { LoginPage } from './components/LoginPage';
-import { useAuthStore } from './store/authStore'; 
+import { useAuthStore } from './store/authStore';
+import LoadingSpinner from './components/common/LoadingSpinner';
 import './app.css';
 
 const App: React.FC = () => {
@@ -32,7 +33,7 @@ const App: React.FC = () => {
   }, [login, logout]); 
 
   if (!initialized) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!isLoggedIn) {

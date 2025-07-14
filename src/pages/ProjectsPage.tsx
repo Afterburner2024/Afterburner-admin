@@ -4,6 +4,7 @@ import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
 import { mockProjects } from '../utils/mockData';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 // 정렬 옵션
 const sortOptions = [
@@ -29,7 +30,7 @@ const ProjectsPage: React.FC = () => {
     mockData: mockProjects,
   });
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>에러가 발생했습니다: {error.message}</div>;
   if (!filteredAndSortedData || filteredAndSortedData.length === 0) return <div>프로젝트가 없습니다.</div>;
 

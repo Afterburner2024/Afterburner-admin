@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetcher } from '../utils/api';
 import type { Member } from '../types/api';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const MemberDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,10 +11,10 @@ const MemberDetailPage: React.FC = () => {
   // React Query를 사용하여 특정 회원 정보 가져옴.
   const { data: member, isLoading, error } = useQuery<Member, Error>({
     queryKey: ['member', id],
-    queryFn: () => fetcher(`/api/v1/members/${id}`),
+    queryFn: () => fetcher(`/api/users/${id}`),
   });
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>에러가 발생했습니다: {error.message}</div>;
   if (!member) return <div>회원 정보를 찾을 수 없습니다.</div>;
 

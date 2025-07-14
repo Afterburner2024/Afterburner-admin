@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetcher } from '../utils/api';
 import type { Notice } from '../types/api';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const NoticeDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,7 +13,7 @@ const NoticeDetailPage: React.FC = () => {
     queryFn: () => fetcher(`/api/v1/notice/${id}`),
   });
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>에러가 발생했습니다: {error.message}</div>;
   if (!notice) return <div>공지사항 정보를 찾을 수 없습니다.</div>;
 

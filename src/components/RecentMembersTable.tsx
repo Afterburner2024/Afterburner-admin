@@ -8,7 +8,7 @@ import { mockMembers } from '../utils/mockData';
 export const RecentMembersTable: React.FC = () => {
   const { data: members, error } = useQuery<Member[], Error>({
     queryKey: ['recent-members'],
-    queryFn: () => fetcher('/api/v1/members?sort=signupDate-desc&limit=5'),
+    queryFn: () => fetcher('/api/users?sort=signupDate-desc&limit=5'),
   });
 
   const data = error ? mockMembers : (members || []);

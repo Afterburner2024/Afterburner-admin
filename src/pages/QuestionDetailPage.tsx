@@ -3,16 +3,17 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetcher } from '../utils/api';
 import type { Question } from '../types/api';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const QuestionDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
   const { data: question, isLoading, error } = useQuery<Question, Error>({
     queryKey: ['question', id],
-    queryFn: () => fetcher(`/api/v1/questions/${id}`),
+    queryFn: () => fetcher(`/api/v1/qna/${id}`),
   });
 
-  if (isLoading) return <div>로딩 중...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>에러가 발생했습니다: {error.message}</div>;
   if (!question) return <div>질문 정보를 찾을 수 없습니다.</div>;
 
