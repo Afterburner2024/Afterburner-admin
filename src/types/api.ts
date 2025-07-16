@@ -10,20 +10,23 @@ export interface Member {
 // 공지사항 정보 타입
 export interface Notice {
   id: number;
+  userName: string;
   title: string;
   content: string;
   createdAt: string; 
+  updatedAt: string;
   important: boolean; // 중요 공지 여부
 }
 
 // 프로젝트 정보 타입
 export interface Project {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-  author: string;
-  views: number;
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  members: string[];
 }
 
 // 스터디 그룹 정보 타입

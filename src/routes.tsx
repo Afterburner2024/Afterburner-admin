@@ -23,7 +23,9 @@ const AppRoutes: React.FC = () => {
         <Route path="studies" element={<StudyGroupsPage />} />
         <Route path="studies/:id" element={<StudyGroupDetailPage />} />
         <Route path="notices" element={<NoticesPage />} />
+        <Route path="notices/register" element={<div>공지사항 등록 페이지</div>} />
         <Route path="notices/:id" element={<NoticeDetailPage />} />
+        <Route path="notices/edit/:id" element={<div>공지사항 수정 페이지</div>} />
         <Route path="questions" element={<QuestionsPage />} />
         <Route path="questions/:id" element={<QuestionDetailPage />} />
         <Route path="members" element={<MembersPage />} />

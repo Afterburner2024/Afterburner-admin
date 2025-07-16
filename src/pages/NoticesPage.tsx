@@ -1,70 +1,60 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDataFetching } from '../hooks/useDataFetching';
-import SearchInput from '../components/common/SearchInput';
-import SortDropdown from '../components/common/SortDropdown';
-import { mockNotices } from '../utils/mockData';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
+import { mockNotices as rawMockNotices } from '../utils/mockData';
+import type { Notice } from '../types/api';
 
-// 정렬 옵션
-const sortOptions = [
-  { value: 'title-asc', label: '제목 (오름차순)' },
-  { value: 'title-desc', label: '제목 (내림차순)' },
-  { value: 'createdAt-asc', label: '작성일 (오래된 순)' },
-  { value: 'createdAt-desc', label: '작성일 (최신 순)' },
-];
+const mockNotices: Notice[] = rawMockNotices as unknown as Notice[];
 
 const NoticesPage: React.FC = () => {
-  const { 
-    data: filteredAndSortedData, 
-    isLoading, 
-    error, 
-    searchQuery, 
-    setSearchQuery, 
-    sortOption, 
-    setSortOption 
-  } = useDataFetching<Notice>({
-    queryKey: ['notices'],
-    endpoint: '/api/v1/notice',
-    searchFields: ['title', 'content'],
-    mockData: mockNotices,
-  });
+  const navigate = useNavigate();
 
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <div>에러가 발생했습니다: {error.message}</div>;
-  if (!filteredAndSortedData || filteredAndSortedData.length === 0) return <div>공지사항이 없습니다.</div>;
+  const handleRegisterClick = () => {
+    navigate('/notices/register');
+  };
 
+  const handleNoticeClick = (id: string) => {
+    navigate(`/notices/${id}`);
+  };
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">공지사항 관리</h2>
-      <div className="flex justify-between mb-4">
-        <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="공지사항 검색..." />
-        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} options={sortOptions} />
+    <div className="p-6">
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">공지사항</h1>
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={handleRegisterClick}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          공지사항 등록
+        </button>
       </div>
-      <div className="bg-white shadow-md rounded my-6">
-        <table className="min-w-max w-full table-auto">
-          <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-              <th className="py-3 px-6 text-left">ID</th>
-              <th className="py-3 px-6 text-left">제목</th>
-              <th className="py-3 px-6 text-left">작성일</th>
-              <th className="py-3 px-6 text-center">활동</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-600 text-sm font-light">
-            {filteredAndSortedData.map((notice) => (
-              <tr key={notice.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{notice.id}</td>
-                <td className="py-3 px-6 text-left">{notice.title}</td>
-                <td className="py-3 px-6 text-left">{new Date(notice.createdAt).toLocaleDateString()}</td>
-                <td className="py-3 px-6 text-center">
-                  <Link to={`/notices/${notice.id}`} className="text-blue-500 hover:underline">상세보기</Link>
-                </td>
+      <div className="bg-white p-4 rounded-lg shadow">
+        {mockNotices.length === 0 ? (
+          <p>등록된 공지사항이 없습니다.</p>
+        ) : (
+          <table className="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">제목</th>
+                <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">작성자</th>
+                <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">작성일</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {mockNotices.map((notice) => (
+                <tr
+                  key={notice.id}
+                  className="hover:bg-gray-50 cursor-pointer"
+                  onClick={() => handleNoticeClick(String(notice.id))}
+                >
+                  <td className="py-2 px-4 border-b border-gray-200">{notice.title}</td>
+                  <td className="py-2 px-4 border-b border-gray-200">{notice.userName}</td>
+                  <td className="py-2 px-4 border-b border-gray-200">{notice.createdAt}</td>
+                  <td className="py-2 px-4 border-b border-gray-200">{notice.updatedAt}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
