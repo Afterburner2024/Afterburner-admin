@@ -1,42 +1,38 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import type { Notice } from '../types/api';
-
-import { mockNotices } from '../utils/mockData';
+import { Link } from 'react-router-dom';
+import LoadingSpinner from './common/LoadingSpinner';
+import { useRecentNotices } from '../hooks/useRecentNotices';
 
 export const NoticesList: React.FC = () => {
-  const { data: notices, error } = useQuery<Notice[], Error>({
-    queryKey: ['recent-notices'],
-    queryFn: () => fetcher('/api/v1/notice?sort=createdAt-desc&limit=5'),
-  });
+  const { data: notices = [], isLoading, error } = useRecentNotices();
 
-  const data = error ? mockNotices : (notices || []);
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-800">공지사항</h2>
-        <a href="#" className="text-sm text-indigo-600 hover:underline">더보기</a>
+        <Link to="/notices" className="text-sm text-indigo-600 hover:underline">더보기</Link>
       </div>
       <ul className="space-y-3">
-        {data.map(notice => (
+        {notices.map((notice) => (
           <li
-            key={notice.id}
+            key={notice.noticeId}
             className="p-3 transition-colors border-l-4 rounded-r-md hover:bg-gray-50"
-            style={{ borderLeftColor: notice.important ? '#4f46e5' : '#e5e7eb' }}
+            style={{ borderLeftColor: notice.noticeStatus === 'IMPORTANT' ? '#4f46e5' : '#e5e7eb' }}
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                {notice.important && (
-                  <span className="inline-block w-2 h-2 mr-2 bg-red-500 rounded-full"></span>
-                )}
-                <span className={`font-medium ${notice.important ? 'text-gray-800' : 'text-gray-700'}`}>
-                  {notice.title}
-                </span>
+            <Link to={`/notices/${notice.noticeId}`} className="block">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  {notice.noticeStatus === 'IMPORTANT' && (
+                    <span className="inline-block w-2 h-2 mr-2 bg-red-500 rounded-full"></span>
+                  )}
+                  <span className="font-medium text-gray-700">{notice.noticeTitle}</span>
+                </div>
+                <span className="text-sm text-gray-500">{new Date(notice.noticeCreatedAt).toLocaleDateString()}</span>
               </div>
-              <span className="text-sm text-gray-500">{notice.createdAt}</span>
-            </div>
+            </Link>
           </li>
         ))}
       </ul>

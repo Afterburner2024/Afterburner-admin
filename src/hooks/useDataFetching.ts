@@ -1,25 +1,33 @@
-import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
+import { useEffect, useState } from 'react';
+import api from '../utils/apiClient';
 import { useSearchAndSort } from './useSearchAndSort';
-import type { Member, Notice, Project, Question, StudyGroup } from '../types/api';
+import type { Member, Notice, Project, Question, StudyGroup } from '../types/responseTypes';
 
 type DataType = Member | Notice | Project | Question | StudyGroup;
 
 interface UseDataFetchingProps<T extends DataType> {
-  queryKey: string[];
   endpoint: string;
   searchFields: (keyof T)[];
-  mockData: T[];
 }
 
-export const useDataFetching = <T extends DataType>({ queryKey, endpoint, searchFields, mockData }: UseDataFetchingProps<T>) => {
-  const { data, isLoading, error } = useQuery<T[], Error>({
-    queryKey,
-    queryFn: () => fetcher(endpoint),
-    refetchInterval: 5 * 60 * 1000, // 5분
-  });
+export const useDataFetching = <T extends DataType>({ endpoint, searchFields }: UseDataFetchingProps<T>) => {
+  const [data, setData] = useState<T[]>([]);
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  const initialData = error ? mockData : (data || []);
+  useEffect(() => {
+    setLoading(true);
+    api
+      .get(endpoint)
+      .then((res) => setData(res.data.result ?? res.data))
+      .catch((err) => {
+        setError(err);
+        setData([]);
+      })
+      .finally(() => setLoading(false));
+  }, [endpoint]);
+
+  const initialData = data;
 
   const {
     searchQuery,

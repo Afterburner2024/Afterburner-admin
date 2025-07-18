@@ -1,16 +1,18 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import ProjectsPage from './pages/ProjectsPage';
-import ProjectDetailPage from './pages/ProjectDetailPage';
-import StudyGroupsPage from './pages/StudyGroupsPage';
-import StudyGroupDetailPage from './pages/StudyGroupDetailPage';
-import NoticesPage from './pages/NoticesPage';
-import NoticeDetailPage from './pages/NoticeDetailPage';
-import QuestionsPage from './pages/QuestionsPage';
-import QuestionDetailPage from './pages/QuestionDetailPage';
-import MembersPage from './pages/MembersPage';
-import MemberDetailPage from './pages/MemberDetailPage';
+import ProjectsPage from './pages/Project/ProjectsPage';
+import ProjectDetailPage from './pages/Project/ProjectDetailPage';
+import StudyGroupsPage from './pages/Study/StudyGroupsPage';
+import StudyGroupDetailPage from './pages/Study/StudyGroupDetailPage';
+import NoticesPage from './pages/Notices/NoticesPage';
+import NoticeDetailPage from './pages/Notices/NoticeDetailPage';
+import NoticeCreatePage from './pages/Notices/NoticeCreatePage';
+import NoticeEditPage from './pages/Notices/NoticeEditPage';
+import QuestionsPage from './pages/Question/QuestionsPage';
+import QuestionDetailPage from './pages/Question/QuestionDetailPage';
+import MembersPage from './pages/Member/MembersPage';
+import MemberDetailPage from './pages/Member/MemberDetailPage';
 import AdminLayout from './layouts/AdminLayout';
 
 const AppRoutes: React.FC = () => {
@@ -23,9 +25,9 @@ const AppRoutes: React.FC = () => {
         <Route path="studies" element={<StudyGroupsPage />} />
         <Route path="studies/:id" element={<StudyGroupDetailPage />} />
         <Route path="notices" element={<NoticesPage />} />
-        <Route path="notices/register" element={<div>공지사항 등록 페이지</div>} />
+        <Route path="notices/create" element={<NoticeCreatePage />} />
         <Route path="notices/:id" element={<NoticeDetailPage />} />
-        <Route path="notices/edit/:id" element={<div>공지사항 수정 페이지</div>} />
+        <Route path="notices/edit/:id" element={<NoticeEditPage />} />
         <Route path="questions" element={<QuestionsPage />} />
         <Route path="questions/:id" element={<QuestionDetailPage />} />
         <Route path="members" element={<MembersPage />} />
