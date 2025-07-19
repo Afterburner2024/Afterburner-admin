@@ -26,18 +26,26 @@ export const RecentMembersTable: React.FC = () => {
               <th className="pb-2">가입일</th>
             </tr>
           </thead>
-          <tbody>
-            {members.map((m) => (
-              <tr key={m.userId} className="border-b hover:bg-gray-50">
-                <td className="py-3">
-                  <Link to={`/members/${m.userId}`} className="hover:underline text-indigo-600">
-                    {m.userName}
-                  </Link>
+          <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
+            {members.length > 0 ? (
+              members.map((m) => (
+                <tr key={m.userId} className="border-b hover:bg-gray-50">
+                  <td className="py-3">
+                    <Link to={`/members/${m.userId}`} className="hover:underline text-indigo-600">
+                      {m.userName}
+                    </Link>
+                  </td>
+                  <td className="py-3 text-sm text-gray-600">{m.userEmail}</td>
+                  <td className="py-3 text-sm text-gray-600">{new Date(m.registeredAt).toLocaleDateString()}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={3} className="text-center py-10 text-gray-500">
+                  최신 회원이 없습니다.
                 </td>
-                <td className="py-3 text-sm text-gray-600">{m.userEmail}</td>
-                <td className="py-3 text-sm text-gray-600">{new Date(m.registeredAt).toLocaleDateString()}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

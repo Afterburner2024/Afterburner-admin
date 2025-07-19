@@ -26,19 +26,27 @@ export const RecentStudiesTable: React.FC = () => {
               <th className="pb-2">상태</th>
             </tr>
           </thead>
-          <tbody>
-            {studies.map((study) => (
-              <tr key={study.studyGroupId} className="border-b hover:bg-gray-50">
-                <td className="py-3 font-medium text-gray-800">
-                  <Link to={`/studies/${study.studyGroupId}`} className="hover:underline text-indigo-600">
-                    {study.studyGroupTitle}
-                  </Link>
+          <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
+            {studies.length > 0 ? (
+              studies.map((study) => (
+                <tr key={study.studyGroupId} className="border-b hover:bg-gray-50">
+                  <td className="py-3 font-medium text-gray-800">
+                    <Link to={`/studies/${study.studyGroupId}`} className="hover:underline text-indigo-600">
+                      {study.studyGroupTitle}
+                    </Link>
+                  </td>
+                  <td className="py-3 text-sm text-gray-600">{study.studyGroupUserId}</td>
+                  <td className="py-3 text-sm text-gray-600">{new Date(study.studyGroupCreatedAt).toLocaleDateString()}</td>
+                  <td className="py-3 text-sm text-gray-600">{study.studyGroupStatus}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center py-10 text-gray-500">
+                  최신 스터디가 없습니다.
                 </td>
-                <td className="py-3 text-sm text-gray-600">{study.studyGroupUserId}</td>
-                <td className="py-3 text-sm text-gray-600">{new Date(study.studyGroupCreatedAt).toLocaleDateString()}</td>
-                <td className="py-3 text-sm text-gray-600">{study.studyGroupStatus}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

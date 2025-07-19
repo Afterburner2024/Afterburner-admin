@@ -26,19 +26,27 @@ export const RecentProjectsTable: React.FC = () => {
               <th className="pb-2">상태</th>
             </tr>
           </thead>
-          <tbody>
-            {projects.map((project) => (
-              <tr key={project.projectId} className="border-b hover:bg-gray-50">
-                <td className="py-3 font-medium text-gray-800">
-                  <Link to={`/projects/${project.projectId}`} className="hover:underline text-indigo-600">
-                    {project.projectTitle}
-                  </Link>
+          <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
+            {projects.length > 0 ? (
+              projects.map((project) => (
+                <tr key={project.projectId} className="border-b hover:bg-gray-50">
+                  <td className="py-3 font-medium text-gray-800">
+                    <Link to={`/projects/${project.projectId}`} className="hover:underline text-indigo-600">
+                      {project.projectTitle}
+                    </Link>
+                  </td>
+                  <td className="py-3 text-sm text-gray-600">{project.projectId}</td>
+                  <td className="py-3 text-sm text-gray-600">{new Date(project.projectCreatedAt).toLocaleDateString()}</td>
+                  <td className="py-3 text-sm text-gray-600">{project.projectStatus}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center py-10 text-gray-500">
+                  최신 프로젝트가 없습니다.
                 </td>
-                <td className="py-3 text-sm text-gray-600">{project.projectUserId}</td>
-                <td className="py-3 text-sm text-gray-600">{new Date(project.projectCreatedAt).toLocaleDateString()}</td>
-                <td className="py-3 text-sm text-gray-600">{project.projectStatus}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

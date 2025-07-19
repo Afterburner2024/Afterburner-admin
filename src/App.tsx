@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./utils/firebase";
 import AppRoutes from "./routes";
@@ -7,6 +7,7 @@ import { LoginPage } from "./components/LoginPage";
 import { useAuthStore } from "./store/authStore";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 import "./app.css";
+import ApprovalWaitingPage from "./components/ApprovalWaiting";
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
@@ -42,15 +43,7 @@ const App: React.FC = () => {
     return <LoginPage />;
   }
 
-  if (userStatus !== "관리자") {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">사용자 승인 대기중입니다....</h1>
-        </div>
-      </div>
-    );
-  }
+  if (userStatus !== "관리자") { return <ApprovalWaitingPage />; }
 
   return <AppRoutes />;
 };
