@@ -3,6 +3,7 @@ import { RecentMembersTable } from '../components/RecentMembersTable';
 import { RecentProjectsTable } from '../components/RecentProjectsTable';
 import { RecentStudiesTable } from '../components/RecentStudiesTable';
 import { NoticesList } from '../components/NoticesList';
+import DashboardChart from '../components/DashboardChart';
 
 const Dashboard: React.FC = () => {
   return (
@@ -11,6 +12,9 @@ const Dashboard: React.FC = () => {
       <RecentProjectsTable />
       <RecentStudiesTable />
       <NoticesList />
+      <div className="md:col-span-2">
+        <DashboardChart />
+      </div>
     </div>
   );
 };

@@ -79,7 +79,7 @@ export const LoginPage: React.FC = () => {
           className="flex items-center justify-center gap-3 w-full px-6 py-3 bg-[#FF0000] hover:bg-[#CC0000] transition-colors duration-200 text-[#FFFFFF] font-semibold rounded-full shadow-md shadow-black/20"
         >
           <img
-            src="public/google/light/web_light_rd_na@4x.png"
+            src="/google/light/web_light_rd_na@4x.png"
             alt="Google로 로그인"
             className="w-6 h-6 object-contain"
           />
