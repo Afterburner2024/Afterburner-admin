@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import { mockProjects } from '../utils/mockData';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import type { Project } from '../types/responseTypes';
 
 // 정렬 옵션
 const sortOptions = [
@@ -24,10 +24,9 @@ const ProjectsPage: React.FC = () => {
     sortOption, 
     setSortOption 
   } = useDataFetching<Project>({
-    queryKey: ['projects'],
+    queryKey: 'projects',
     endpoint: '/api/v1/project',
-    searchFields: ['title', 'content'],
-    mockData: mockProjects,
+    searchFields: ['projectTitle', 'projectContent'],
   });
 
   if (isLoading) return <LoadingSpinner />;
@@ -53,12 +52,12 @@ const ProjectsPage: React.FC = () => {
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
             {filteredAndSortedData.map((project) => (
-              <tr key={project.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{project.id}</td>
-                <td className="py-3 px-6 text-left">{project.title}</td>
-                <td className="py-3 px-6 text-left">{new Date(project.createdAt).toLocaleDateString()}</td>
+              <tr key={project.projectId} className="border-b border-gray-200 hover:bg-gray-100">
+                <td className="py-3 px-6 text-left whitespace-nowrap">{project.projectId}</td>
+                <td className="py-3 px-6 text-left">{project.projectTitle}</td>
+                <td className="py-3 px-6 text-left">{new Date(project.projectCreatedAt).toLocaleDateString()}</td>
                 <td className="py-3 px-6 text-center">
-                  <Link to={`/projects/${project.id}`} className="text-blue-500 hover:underline">상세보기</Link>
+                  <Link to={`/projects/${project.projectId}`} className="text-blue-500 hover:underline">상세보기</Link>
                 </td>
               </tr>
             ))}

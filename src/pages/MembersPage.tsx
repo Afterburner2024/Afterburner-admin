@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import { mockMembers } from '../utils/mockData';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import type { Member } from '../types/responseTypes';
 
 // 정렬 옵션
 const sortOptions = [
@@ -24,11 +24,10 @@ const MembersPage: React.FC = () => {
     sortOption, 
     setSortOption 
   } = useDataFetching<Member>({
-    queryKey: ['members'],
+    queryKey: 'members',
     endpoint: '/api/users',
-    searchFields: ['name', 'email'],
-    mockData: mockMembers,
-  });
+    searchFields: ['userName', 'userEmail'],
+    });
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <div>에러가 발생했습니다: {error.message}</div>;
@@ -54,13 +53,13 @@ const MembersPage: React.FC = () => {
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
             {filteredAndSortedData.map((member) => (
-              <tr key={member.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{member.id}</td>
-                <td className="py-3 px-6 text-left">{member.name}</td>
-                <td className="py-3 px-6 text-left">{member.email}</td>
-                <td className="py-3 px-6 text-left">{new Date(member.signupDate).toLocaleDateString()}</td>
+              <tr key={member.userId} className="border-b border-gray-200 hover:bg-gray-100">
+                <td className="py-3 px-6 text-left whitespace-nowrap">{member.userId}</td>
+                <td className="py-3 px-6 text-left">{member.userName}</td>
+                <td className="py-3 px-6 text-left">{member.userEmail}</td>
+                <td className="py-3 px-6 text-left">{new Date(member.registeredAt).toLocaleDateString()}</td>
                 <td className="py-3 px-6 text-center">
-                  <Link to={`/members/${member.id}`} className="text-blue-500 hover:underline">상세보기</Link>
+                  <Link to={`/members/${member.userId}`} className="text-blue-500 hover:underline">상세보기</Link>
                 </td>
               </tr>
             ))}

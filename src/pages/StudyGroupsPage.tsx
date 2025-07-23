@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import { mockStudyGroups } from '../utils/mockData';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import type { StudyGroup } from '../types/responseTypes';
 
 // 정렬 옵션
 const sortOptions = [
@@ -24,11 +24,10 @@ const StudyGroupsPage: React.FC = () => {
     sortOption, 
     setSortOption 
   } = useDataFetching<StudyGroup>({
-    queryKey: ['studyGroups'],
+    queryKey: 'studyGroups',
     endpoint: '/api/v1/study-group',
-    searchFields: ['title', 'content'],
-    mockData: mockStudyGroups,
-  });
+    searchFields: ['studyGroupTitle', 'studyGroupContent'],
+    });
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <div>에러가 발생했습니다: {error.message}</div>;
@@ -53,12 +52,12 @@ const StudyGroupsPage: React.FC = () => {
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
             {filteredAndSortedData.map((studyGroup) => (
-              <tr key={studyGroup.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{studyGroup.id}</td>
-                <td className="py-3 px-6 text-left">{studyGroup.title}</td>
-                <td className="py-3 px-6 text-left">{new Date(studyGroup.createdAt).toLocaleDateString()}</td>
+              <tr key={studyGroup.studyGroupId} className="border-b border-gray-200 hover:bg-gray-100">
+                <td className="py-3 px-6 text-left whitespace-nowrap">{studyGroup.studyGroupId}</td>
+                <td className="py-3 px-6 text-left">{studyGroup.studyGroupTitle}</td>
+                <td className="py-3 px-6 text-left">{new Date(studyGroup.studyGroupCreatedAt).toLocaleDateString()}</td>
                 <td className="py-3 px-6 text-center">
-                  <Link to={`/studies/${studyGroup.id}`} className="text-blue-500 hover:underline">상세보기</Link>
+                  <Link to={`/studies/${studyGroup.studyGroupId}`} className="text-blue-500 hover:underline">상세보기</Link>
                 </td>
               </tr>
             ))}

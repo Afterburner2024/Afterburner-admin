@@ -44,4 +44,5 @@ export interface Question {
   qnaAnswer: string;
   qnaStatus: string;
   qnaCreatedAt: string;
+  author: string;
 }

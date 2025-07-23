@@ -6,6 +6,7 @@ import SearchInput from '../../components/common/SearchInput';
 import SortDropdown from '../../components/common/SortDropdown';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import Pagination from '../../components/common/Pagination';
+import type { Question } from '../../types/responseTypes';
 
 // 정렬 옵션
 const sortOptions = [
@@ -27,6 +28,7 @@ const QuestionsPage: React.FC = () => {
   } = useDataFetching<Question>({
     endpoint: '/api/v1/qna',
     searchFields: ['qnaTitle', 'qnaContent'],
+    queryKey: 'questions',
   });
 
   const {

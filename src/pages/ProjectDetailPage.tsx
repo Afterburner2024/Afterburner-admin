@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetcher } from '../utils/api';
-import type { Project } from '../types/api';
+import type { Project } from '../types/responseTypes';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const ProjectDetailPage: React.FC = () => {
@@ -21,10 +21,10 @@ const ProjectDetailPage: React.FC = () => {
     <div>
       <h2 className="text-xl font-semibold mb-4">프로젝트 상세 정보</h2>
       <div>
-        <p><strong>ID:</strong> {project.id}</p>
-        <p><strong>제목:</strong> {project.title}</p>
-        <p><strong>내용:</strong> {project.content}</p>
-        <p><strong>작성일:</strong> {new Date(project.createdAt).toLocaleString()}</p>
+        <p><strong>ID:</strong> {project.projectId}</p>
+        <p><strong>제목:</strong> {project.projectTitle}</p>
+        <p><strong>내용:</strong> {project.projectContent}</p>
+        <p><strong>작성일:</strong> {new Date(project.projectCreatedAt).toLocaleString()}</p>
       </div>
     </div>
   );

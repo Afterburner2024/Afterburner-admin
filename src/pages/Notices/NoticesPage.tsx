@@ -29,6 +29,7 @@ const NoticesPage: React.FC = () => {
   } = useDataFetching<Notice>({
     endpoint: '/api/v1/notice',
     searchFields: ['noticeTitle', 'noticeContent'],
+    queryKey: 'notices',
   });
 
   const {

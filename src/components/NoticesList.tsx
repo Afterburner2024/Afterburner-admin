@@ -7,7 +7,7 @@ export const NoticesList: React.FC = () => {
   const { data: notices = [], isLoading, error } = useRecentNotices();
 
   if (isLoading) return <LoadingSpinner />;
-  // if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
+  if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">

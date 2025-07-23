@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDataFetching } from '../hooks/useDataFetching';
 import SearchInput from '../components/common/SearchInput';
 import SortDropdown from '../components/common/SortDropdown';
-import { mockQuestions } from '../utils/mockData';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import type { Question } from '../types/responseTypes';
 
 // 정렬 옵션
 const sortOptions = [
@@ -24,10 +24,9 @@ const QuestionsPage: React.FC = () => {
     sortOption, 
     setSortOption 
   } = useDataFetching<Question>({
-    queryKey: ['questions'],
+    queryKey: 'questions',
     endpoint: '/api/v1/qna',
-    searchFields: ['title', 'content', 'author'],
-    mockData: mockQuestions,
+    searchFields: ['qnaTitle', 'qnaContent'],
   });
 
   if (isLoading) return <LoadingSpinner />;
@@ -54,13 +53,13 @@ const QuestionsPage: React.FC = () => {
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
             {filteredAndSortedData.map((question) => (
-              <tr key={question.id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{question.id}</td>
-                <td className="py-3 px-6 text-left">{question.title}</td>
+              <tr key={question.qnaId} className="border-b border-gray-200 hover:bg-gray-100">
+                <td className="py-3 px-6 text-left whitespace-nowrap">{question.qnaId}</td>
+                <td className="py-3 px-6 text-left">{question.qnaTitle}</td>
                 <td className="py-3 px-6 text-left">{question.author}</td>
-                <td className="py-3 px-6 text-left">{new Date(question.createdAt).toLocaleDateString()}</td>
+                <td className="py-3 px-6 text-left">{new Date(question.qnaCreatedAt).toLocaleDateString()}</td>
                 <td className="py-3 px-6 text-center">
-                  <Link to={`/questions/${question.id}`} className="text-blue-500 hover:underline">상세보기</Link>
+                  <Link to={`/questions/${question.qnaId}`} className="text-blue-500 hover:underline">상세보기</Link>
                 </td>
               </tr>
             ))}
