@@ -6,6 +6,7 @@ import AppRoutes from "./routes";
 import { LoginPage } from "./components/LoginPage";
 import { useAuthStore } from "./store/authStore";
 import LoadingSpinner from "./components/common/LoadingSpinner";
+import { USER_STATUS } from "./types/user";
 import "./app.css";
 import ApprovalWaitingPage from "./components/ApprovalWaiting";
 
@@ -43,7 +44,9 @@ const App: React.FC = () => {
     return <LoginPage />;
   }
 
-  if (userStatus !== "관리자") { return <ApprovalWaitingPage />; }
+  if (userStatus !== USER_STATUS.ADMIN) {
+    return <ApprovalWaitingPage />;
+  }
 
   return <AppRoutes />;
 };
