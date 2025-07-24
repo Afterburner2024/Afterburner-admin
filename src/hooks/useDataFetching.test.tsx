@@ -24,7 +24,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 
-const mockMembers: Member[] = [
+const testMembers: Member[] = [
   { userId: 1, userName: 'Alice', userEmail: 'alice@example.com', registeredAt: '2023-01-01' },
   { userId: 2, userName: 'Bob', userEmail: 'bob@example.com', registeredAt: '2023-01-02' },
   { userId: 3, userName: 'Charlie', userEmail: 'charlie@example.com', registeredAt: '2023-01-03' },
@@ -38,7 +38,7 @@ describe('useDataFetching Hook', () => {
   });
 
   it('should fetch data successfully and return it', async () => {
-    (fetcher as Mock).mockResolvedValue(mockMembers);
+    (fetcher as Mock).mockResolvedValue(testMembers);
 
     const { result } = renderHook(
       () => useDataFetching<Member>({
@@ -53,7 +53,7 @@ describe('useDataFetching Hook', () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     expect(fetcher).toHaveBeenCalledWith('/api/members');
-    expect(result.current.data).toEqual(mockMembers);
+    expect(result.current.data).toEqual(testMembers);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(null);
   });
@@ -80,7 +80,7 @@ describe('useDataFetching Hook', () => {
   });
 
   it('should filter data based on search query', async () => {
-    (fetcher as Mock).mockResolvedValue(mockMembers);
+    (fetcher as Mock).mockResolvedValue(testMembers);
 
     const { result } = renderHook(
       () => useDataFetching<Member>({
@@ -97,11 +97,11 @@ describe('useDataFetching Hook', () => {
       result.current.setSearchQuery('Alice');
     });
 
-    expect(result.current.data).toEqual([mockMembers[0]]);
+    expect(result.current.data).toEqual([testMembers[0]]);
   });
 
   it('should sort data based on sort option', async () => {
-    (fetcher as Mock).mockResolvedValue(mockMembers);
+    (fetcher as Mock).mockResolvedValue(testMembers);
 
     const { result } = renderHook(
       () => useDataFetching<Member>({
@@ -120,9 +120,9 @@ describe('useDataFetching Hook', () => {
     });
 
     expect(result.current.data).toEqual([
-      mockMembers[2], // Charlie
-      mockMembers[1], // Bob
-      mockMembers[0], // Alice
+      testMembers[2], // Charlie
+      testMembers[1], // Bob
+      testMembers[0], // Alice
     ]);
   });
 });

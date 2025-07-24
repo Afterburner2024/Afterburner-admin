@@ -1,9 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockNotices as rawMockNotices } from '../utils/mockData';
 import type { Notice } from '../types/api';
-
-const mockNotices: Notice[] = rawMockNotices as unknown as Notice[];
 
 const NoticesPage: React.FC = () => {
   const navigate = useNavigate();
@@ -28,33 +25,20 @@ const NoticesPage: React.FC = () => {
         </button>
       </div>
       <div className="bg-white p-4 rounded-lg shadow">
-        {mockNotices.length === 0 ? (
-          <p>등록된 공지사항이 없습니다.</p>
-        ) : (
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">제목</th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">작성자</th>
-                <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">작성일</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mockNotices.map((notice) => (
-                <tr
-                  key={notice.id}
-                  className="hover:bg-gray-50 cursor-pointer"
-                  onClick={() => handleNoticeClick(String(notice.id))}
-                >
-                  <td className="py-2 px-4 border-b border-gray-200">{notice.title}</td>
-                  <td className="py-2 px-4 border-b border-gray-200">{notice.userName}</td>
-                  <td className="py-2 px-4 border-b border-gray-200">{notice.createdAt}</td>
-                  <td className="py-2 px-4 border-b border-gray-200">{notice.updatedAt}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        <table className="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">제목</th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">작성자</th>
+              <th className="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-600">작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colSpan={3} className="py-4 px-4 text-center text-gray-500">등록된 공지사항이 없습니다.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
