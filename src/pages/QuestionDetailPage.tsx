@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import type { Question } from '../types/api';
+import { fetcher } from '../utils/apiClient';
+import type { QuestionUI as Question } from '../types/responseTypes';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const QuestionDetailPage: React.FC = () => {

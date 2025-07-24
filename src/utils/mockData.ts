@@ -1,9 +1,9 @@
-import type { Member, Notice, Project, StudyGroup, Question } from '../types/api';
+import type { MemberUI as Member, NoticeUI as Notice, ProjectUI as Project, StudyGroupUI as StudyGroup, QuestionUI as Question } from '../types/responseTypes';
 
 export const mockMembers: Member[] = [
   { id: 1, name: '김민준', email: 'mj.kim@example.com', signupDate: '2023-01-15', status: '활성' },
   { id: 2, name: '이서연', email: 'sy.lee@example.com', signupDate: '2023-01-14', status: '활성' },
-  { id: 3, name: '박현우', email: 'hw.park@example.com', signupDate: '2023-01-13', status: '대기중' },
+  { id: 3, name: '박현우', email: 'hw.park@example.com', signupDate: '2023-01-13', status: '비활성' },
   { id: 4, name: '최지아', email: 'ja.choi@example.com', signupDate: '2023-01-12', status: '활성' },
   { id: 5, name: '정태양', email: 'ty.jung@example.com', signupDate: '2023-01-11', status: '활성' },
 ];

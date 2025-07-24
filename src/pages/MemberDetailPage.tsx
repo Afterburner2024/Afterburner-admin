@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
-import type { Member } from '../types/api';
+import { fetcher } from '../utils/apiClient';
+import type { MemberUI as Member } from '../types/responseTypes';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const MemberDetailPage: React.FC = () => {

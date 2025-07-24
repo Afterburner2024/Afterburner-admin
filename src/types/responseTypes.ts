@@ -46,3 +46,48 @@ export interface Question {
   qnaCreatedAt: string;
   author: string;
 }
+
+export interface MemberUI {
+  id: number;
+  name: string;
+  email: string;
+  signupDate: string;
+  status: '활성' | '비활성';
+}
+
+export interface NoticeUI {
+  id: number;
+  userName: string;
+  title: string;
+  content: string;
+  createdAt: string; 
+  updatedAt: string;
+  important: boolean;
+}
+
+export interface ProjectUI {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+  members: string[];
+}
+
+export interface StudyGroupUI {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string; 
+  author: string;
+  memberCount: number;
+}
+
+export interface QuestionUI {
+  id: number;
+  title: string;
+  content: string;
+  author: string;
+  createdAt: string;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetcher } from '../utils/api';
+import { fetcher } from '../utils/apiClient';
 import type { StudyGroup } from '../types/api';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
