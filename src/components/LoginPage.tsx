@@ -48,7 +48,7 @@ export const LoginPage: React.FC = () => {
         userStatus = updatedUserDocSnap.data().Status;
       }
 
-      useAuthStore.getState().login(await user.getIdToken(), userStatus);
+      useAuthStore.getState().login(userStatus);
       navigate("/");
     } catch (error) {
       console.error(error);

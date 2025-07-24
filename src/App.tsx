@@ -17,14 +17,13 @@ const App: React.FC = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const idToken = await user.getIdToken();
         const userDocRef = doc(db, "users", user.uid);
         const userDocSnap = await getDoc(userDocRef);
         let status = null;
         if (userDocSnap.exists()) {
           status = userDocSnap.data().Status;
         }
-        login(idToken, status);
+        login(status);
       } else {
         logout();
       }
