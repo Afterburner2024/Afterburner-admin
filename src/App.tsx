@@ -9,6 +9,7 @@ import LoadingSpinner from "./components/common/LoadingSpinner";
 import { USER_STATUS } from "./types/user";
 import "./app.css";
 import ApprovalWaitingPage from "./components/ApprovalWaiting";
+import { fetchCsrfToken } from "./utils/apiClient";
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
@@ -33,7 +34,10 @@ const App: React.FC = () => {
     return () => unsubscribe();
   }, [login, logout]);
 
-  
+  useEffect(() => {
+    fetchCsrfToken();
+  }, []);
+
 
   if (!initialized) {
     return <LoadingSpinner />;

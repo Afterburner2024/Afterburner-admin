@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 import type { Notice } from '../types/responseTypes';
+import type { AxiosRequestHeaders } from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -14,7 +15,29 @@ const api = axios.create({
   timeout: 10000, // 10 seconds timeout
 });
 
+let csrfToken: string | null = null;
+
+export const setCsrfToken = (token: string) => {
+  csrfToken = token;
+  api.defaults.headers.common['X-XSRF-TOKEN'] = token;
+};
+
+export const fetchCsrfToken = async (): Promise<void> => {
+  try {
+    const res = await api.get('/csrf-token');
+    if (res.data?.token) {
+      setCsrfToken(res.data.token as string);
+    }
+  } catch {
+    console.error('CSRF token 요청 실패');
+  }
+};
+
 api.interceptors.request.use((config) => {
+  if (csrfToken) {
+    config.headers = config.headers || {};
+    (config.headers as AxiosRequestHeaders)['X-XSRF-TOKEN'] = csrfToken;
+  }
   return config;
 });
 

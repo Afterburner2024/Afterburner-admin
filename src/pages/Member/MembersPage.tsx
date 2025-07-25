@@ -26,7 +26,7 @@ const MembersPage: React.FC = () => {
     sortOption, 
     setSortOption 
   } = useDataFetching<Member>({
-    endpoint: '/api/users',
+    endpoint: '/api/v1/users',
     searchFields: ['userName', 'userEmail'],
     queryKey: 'members',
   });
