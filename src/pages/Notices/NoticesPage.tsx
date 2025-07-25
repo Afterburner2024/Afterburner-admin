@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDataFetching } from '../../hooks/useDataFetching';
+import { getNotices } from '../../utils/apiClient';
+import { useSearchAndSort } from '../../hooks/useSearchAndSort';
 import { usePagination } from '../../hooks/usePagination';
 import Pagination from '../../components/common/Pagination';
 import SearchInput from '../../components/common/SearchInput';
@@ -18,18 +19,36 @@ const sortOptions = [
 const NoticesPage: React.FC = () => {
   const navigate = useNavigate();
 
+  const [notices, setNotices] = useState<Notice[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getNotices();
+        setNotices(data);
+      } catch (e) {
+        console.error('Error fetching notices:', e);
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
   const {
-    data: filteredAndSortedData,
-    isLoading,
-    error,
     searchQuery,
     setSearchQuery,
     sortOption,
     setSortOption,
-  } = useDataFetching<Notice>({
-    endpoint: '/api/v1/notice',
+    filteredAndSortedData,
+  } = useSearchAndSort<Notice>({
+    initialData: notices,
     searchFields: ['noticeTitle', 'noticeContent'],
-    queryKey: 'notices',
   });
 
   const {
