@@ -47,7 +47,11 @@ const App: React.FC = () => {
     return <LoginPage />;
   }
 
-  if (userStatus !== USER_STATUS.ADMIN) {
+
+  if (
+    userStatus !== USER_STATUS.ADMIN &&
+    userStatus !== USER_STATUS.SuperAdmin
+  ) {
     return <ApprovalWaitingPage />;
   }
 

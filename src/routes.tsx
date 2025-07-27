@@ -13,6 +13,7 @@ import QuestionsPage from './pages/Question/QuestionsPage';
 import QuestionDetailPage from './pages/Question/QuestionDetailPage';
 import MembersPage from './pages/Member/MembersPage';
 import MemberDetailPage from './pages/Member/MemberDetailPage';
+import AdminsPage from './pages/Admin/AdminsPage';
 import AdminLayout from './layouts/AdminLayout';
 
 const AppRoutes: React.FC = () => {
@@ -32,6 +33,7 @@ const AppRoutes: React.FC = () => {
         <Route path="questions/:id" element={<QuestionDetailPage />} />
         <Route path="members" element={<MembersPage />} />
         <Route path="members/:id" element={<MemberDetailPage />} />
+        <Route path="admins" element={<AdminsPage />} />
       </Route>
     </Routes>
   );

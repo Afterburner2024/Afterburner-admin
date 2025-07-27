@@ -28,6 +28,7 @@ export const Sidebar: React.FC<Props> = ({ isOpen, onClose, onLogout }) => (
           ["공지사항", "/notices", "fa-bullhorn"],
           ["질문게시판", "/questions", "fa-comments"],
           ["회원관리", "/members", "fa-user-cog"],
+          ["관리자", "/admins", "fa-user-shield"],
         ].map(([label, path, icon]) => (
           <Link
             key={label as string}

@@ -11,13 +11,17 @@ const AdminLayout: React.FC = () => {
   const [isSidebarOpen, toggleSidebar] = useToggle(true);
 
   useEffect(() => {
-    if (!isLoggedIn || userStatus !== "관리자") {
+    if (
+      !isLoggedIn ||
+      (userStatus !== "관리자" && userStatus !== "최고관리자")
+    ) {
+
       navigate('/login');
     }
   }, [isLoggedIn, userStatus, navigate]);
 
-  if (!isLoggedIn || userStatus !== "관리자") {
-    return null; 
+  if (!isLoggedIn || (userStatus !== "관리자" && userStatus !== "최고관리자")) {
+    return null;
   }
 
   return (
