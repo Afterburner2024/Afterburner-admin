@@ -56,7 +56,7 @@ const NoticesPage: React.FC = () => {
     totalPages,
     paginatedData,
     goToPage,
-  } = usePagination(filteredAndSortedData, 10);
+  } = usePagination(filteredAndSortedData, 5);
 
   const handleRegisterClick = () => {
     navigate("/notices/create");
@@ -69,30 +69,34 @@ const NoticesPage: React.FC = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">공지사항 관리</h2>
-      <div className="flex justify-between mb-4">
-        <SearchInput
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          placeholder="공지사항 검색..."
-        />
-        <div className="flex gap-2">
-          <SortDropdown
-            sortOption={sortOption}
-            setSortOption={setSortOption}
-            options={sortOptions}
-          />
-          <button
-            onClick={handleRegisterClick}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
-          >
-            공지 작성
-          </button>
+    <div className="container mx-auto px-4 sm:px-8">
+      <div className="py-8">
+        <div>
+          <h2 className="text-2xl font-semibold leading-tight">공지사항 관리</h2>
         </div>
-      </div>
-      <div className="bg-white shadow-md rounded my-6">
-        <table className="min-w-max w-full table-auto">
+        <div className="my-2 flex sm:flex-row flex-col justify-between">
+          <SearchInput
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            placeholder="공지사항 검색..."
+          />
+          <div className="flex gap-2 mt-2 sm:mt-0">
+            <SortDropdown
+              sortOption={sortOption}
+              setSortOption={setSortOption}
+              options={sortOptions}
+            />
+            <button
+              onClick={handleRegisterClick}
+              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+            >
+              공지 작성
+            </button>
+          </div>
+        </div>
+        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+          <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+            <table className="min-w-full leading-normal">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">공지번호</th>
@@ -125,7 +129,9 @@ const NoticesPage: React.FC = () => {
         {error && (
           <p className="mt-2 text-sm text-red-500">데이터를 불러오는 데 실패했습니다.</p>
         )}
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={goToPage} />
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={goToPage} />
+          </div>
+        </div>
       </div>
     </div>
   );

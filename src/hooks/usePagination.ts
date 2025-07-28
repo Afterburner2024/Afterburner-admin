@@ -1,23 +1,32 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 
-export const usePagination = <T,>(data: T[], itemsPerPage: number = 10) => {
+export const usePagination = <T,>(data: T[], itemsPerPage: number = 5) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = useMemo(() => Math.ceil(data.length / itemsPerPage), [data.length, itemsPerPage]);
+  const totalPages = useMemo(() => Math.ceil(data.length / itemsPerPage) || 1, [
+    data.length,
+    itemsPerPage,
+  ]);
 
+  // 데이터가 변경되어 현재 페이지가 전체 페이지 수를 초과하는 경우, 현재 페이지를 1로 리셋합니다.
   useEffect(() => {
-    setCurrentPage(1);
-  }, [data, itemsPerPage]);
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [totalPages, currentPage]);
 
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return data.slice(startIndex, startIndex + itemsPerPage);
   }, [data, currentPage, itemsPerPage]);
 
-  const goToPage = (page: number) => {
-    const pageNumber = Math.min(Math.max(page, 1), totalPages || 1);
-    setCurrentPage(pageNumber);
-  };
+  const goToPage = useCallback(
+    (page: number) => {
+      const pageNumber = Math.max(1, Math.min(page, totalPages));
+      setCurrentPage(pageNumber);
+    },
+    [totalPages],
+  );
 
   return { currentPage, totalPages, paginatedData, goToPage };
 };

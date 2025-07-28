@@ -24,13 +24,27 @@ const StudyGroupDetailPage: React.FC = () => {
   if (!studyGroup) return <div>스터디 그룹 정보를 찾을 수 없습니다.</div>;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">스터디 그룹 상세 정보</h2>
-      <div>
-        <p><strong>ID:</strong> {studyGroup.studyGroupId}</p>
-        <p><strong>제목:</strong> {studyGroup.studyGroupTitle}</p>
-        <p><strong>내용:</strong> {studyGroup.studyGroupContent}</p>
-        <p><strong>작성일:</strong> {new Date(studyGroup.studyGroupCreatedAt).toLocaleString()}</p>
+    <div className="container mx-auto p-4">
+      <div className="bg-white shadow-md rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">스터디 그룹 상세 정보</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">ID</label>
+            <p className="text-lg text-gray-900">{studyGroup.studyGroupId}</p>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">제목</label>
+            <p className="text-lg text-gray-900">{studyGroup.studyGroupTitle}</p>
+          </div>
+          <div className="md:col-span-2 flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">내용</label>
+            <p className="text-lg text-gray-900 whitespace-pre-wrap">{studyGroup.studyGroupContent}</p>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">작성일</label>
+            <p className="text-lg text-gray-900">{new Date(studyGroup.studyGroupCreatedAt).toLocaleString()}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

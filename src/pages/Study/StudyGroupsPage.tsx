@@ -10,10 +10,10 @@ import type { StudyGroup } from '../../types/responseTypes';
 
 // 정렬 옵션
 const sortOptions = [
-  { value: 'title-asc', label: '제목 (오름차순)' },
-  { value: 'title-desc', label: '제목 (내림차순)' },
-  { value: 'createdAt-asc', label: '작성일 (오래된 순)' },
-  { value: 'createdAt-desc', label: '작성일 (최신 순)' },
+  { value: 'studyGroupTitle-asc', label: '제목 (오름차순)' },
+  { value: 'studyGroupTitle-desc', label: '제목 (내림차순)' },
+  { value: 'studyGroupCreatedAt-asc', label: '작성일 (오래된 순)' },
+  { value: 'studyGroupCreatedAt-desc', label: '작성일 (최신 순)' },
 ];
 
 const StudyGroupsPage: React.FC = () => {
@@ -36,19 +36,23 @@ const StudyGroupsPage: React.FC = () => {
     totalPages,
     paginatedData,
     goToPage,
-  } = usePagination(filteredAndSortedData, 10);
+  } = usePagination(filteredAndSortedData, 5);
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">스터디 그룹 관리</h2>
-      <div className="flex justify-between mb-4">
-        <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="스터디 그룹 검색..." />
-        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} options={sortOptions} />
-      </div>
-      <div className="bg-white shadow-md rounded my-6">
-        <table className="min-w-max w-full table-auto">
+    <div className="container mx-auto px-4 sm:px-8">
+      <div className="py-8">
+        <div>
+          <h2 className="text-2xl font-semibold leading-tight">스터디 그룹 관리</h2>
+        </div>
+        <div className="my-2 flex sm:flex-row flex-col justify-between">
+          <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="스터디 그룹 검색..." />
+          <SortDropdown sortOption={sortOption} setSortOption={setSortOption} options={sortOptions} />
+        </div>
+        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+          <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+            <table className="min-w-full leading-normal">
           <thead>
             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">ID</th>
@@ -78,10 +82,12 @@ const StudyGroupsPage: React.FC = () => {
             )}
           </tbody>
         </table>
-        {error && (
-          <p className="mt-2 text-sm text-red-500">데이터를 불러오는 데 실패했습니다.</p>
-        )}
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={goToPage} />
+            {error && (
+              <p className="mt-2 text-sm text-red-500">데이터를 불러오는 데 실패했습니다.</p>
+            )}
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={goToPage} />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ searchQuery, setSearchQuery, 
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
       placeholder={placeholder}
-      className="border p-2 rounded"
+      className="border p-2 rounded focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-shadow"
     />
   );
 };

@@ -6,11 +6,19 @@ import { useRecentMembers } from '../hooks/useRecentMembers';
 export const RecentMembersTable: React.FC = () => {
   const { data: members = [], isLoading, error } = useRecentMembers();
 
+  // 가입일 순 정렬 후 상위 5개 추출
+  const displayedMembers = [...members]
+    .sort(
+      (a, b) =>
+        new Date(b.registeredAt).getTime() - new Date(a.registeredAt).getTime()
+    )
+    .slice(0, 5);
+
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-white rounded-lg shadow-md fade-in">
       <div className="flex justify-between mb-4">
         <h2 className="text-lg font-semibold">최신 회원 목록</h2>
         <Link to="/members" className="text-sm text-indigo-600 hover:underline">
@@ -27,9 +35,12 @@ export const RecentMembersTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
-            {members.length > 0 ? (
-              members.map((m) => (
-                <tr key={m.userId} className="border-b hover:bg-gray-50">
+            {displayedMembers.length > 0 ? (
+              displayedMembers.map((m) => (
+                <tr
+                  key={m.userId}
+                  className="border-b hover:bg-indigo-50 transition-colors duration-150"
+                >
                   <td className="py-3">
                     <Link to={`/members/${m.userId}`} className="hover:underline text-indigo-600">
                       {m.userName}

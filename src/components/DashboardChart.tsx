@@ -27,7 +27,7 @@ export const DashboardChart: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-white rounded-lg shadow-md fade-in">
       <h2 className="text-lg font-semibold mb-4">최근 데이터 요약</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={stats} aria-label="dashboard stats">

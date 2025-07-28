@@ -6,11 +6,20 @@ import { useRecentNotices } from '../hooks/useRecentNotices';
 export const NoticesList: React.FC = () => {
   const { data: notices = [], isLoading, error } = useRecentNotices();
 
+  // 작성일 기준 정렬 후 상위 5개만 표시
+  const displayedNotices = [...notices]
+    .sort(
+      (a, b) =>
+        new Date(b.noticeCreatedAt).getTime() -
+        new Date(a.noticeCreatedAt).getTime()
+    )
+    .slice(0, 5);
+
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-white rounded-lg shadow-md fade-in">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-800">공지사항</h2>
         <Link to="/notices" className="text-sm text-indigo-600 hover:underline">더보기</Link>
@@ -24,9 +33,12 @@ export const NoticesList: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
-            {notices.length > 0 ? (
-              notices.map((notice) => (
-                <tr key={notice.noticeId} className="hover:bg-gray-50">
+            {displayedNotices.length > 0 ? (
+              displayedNotices.map((notice) => (
+                <tr
+                  key={notice.noticeId}
+                  className="hover:bg-indigo-50 transition-colors duration-150"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link to={`/notices/${notice.noticeId}`} className="flex items-center">
                       {notice.noticeStatus === 'IMPORTANT' && (

@@ -7,11 +7,20 @@ import { useRecentStudies } from '../hooks/useRecentStudies';
 export const RecentStudiesTable: React.FC = () => {
   const { data: studies = [], isLoading, error } = useRecentStudies();
 
+  // 생성일 순 정렬 후 상위 5개 추출
+  const displayedStudies = [...studies]
+    .sort(
+      (a, b) =>
+        new Date(b.studyGroupCreatedAt).getTime() -
+        new Date(a.studyGroupCreatedAt).getTime()
+    )
+    .slice(0, 5);
+
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
+    <div className="p-6 bg-white rounded-lg shadow-md fade-in">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-800">스터디그룹 글 목록</h2>
         <Link to="/studies" className="text-sm text-indigo-600 hover:underline">더보기</Link>
@@ -27,9 +36,12 @@ export const RecentStudiesTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
-            {studies.length > 0 ? (
-              studies.map((study) => (
-                <tr key={study.studyGroupId} className="border-b hover:bg-gray-50">
+            {displayedStudies.length > 0 ? (
+              displayedStudies.map((study) => (
+                <tr
+                  key={study.studyGroupId}
+                  className="border-b hover:bg-indigo-50 transition-colors duration-150"
+                >
                   <td className="py-3 font-medium text-gray-800">
                     <Link to={`/studies/${study.studyGroupId}`} className="hover:underline text-indigo-600">
                       {study.studyGroupTitle}

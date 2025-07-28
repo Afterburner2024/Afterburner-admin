@@ -21,17 +21,31 @@ const MemberDetailPage: React.FC = () => {
   }, [id]);
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <div>에러가 발생했습니다: {error.message}</div>;
-  if (!member) return <div>회원 정보를 찾을 수 없습니다.</div>;
+  if (error) return <div className="p-4 text-red-500">에러가 발생했습니다: {error.message}</div>;
+  if (!member) return <div className="p-4">회원 정보를 찾을 수 없습니다.</div>;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">회원 상세 정보</h2>
-      <div>
-        <p><strong>ID:</strong> {member.userId}</p>
-        <p><strong>이름:</strong> {member.userName}</p>
-        <p><strong>이메일:</strong> {member.userEmail}</p>
-        <p><strong>가입일:</strong> {new Date(member.registeredAt).toLocaleString()}</p>
+    <div className="container mx-auto p-4">
+      <div className="bg-white shadow-md rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">회원 상세 정보</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">ID</label>
+            <p className="text-lg text-gray-900">{member.userId}</p>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">이름</label>
+            <p className="text-lg text-gray-900">{member.userName}</p>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">이메일</label>
+            <p className="text-lg text-gray-900">{member.userEmail}</p>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-semibold text-gray-500 mb-1">가입일</label>
+            <p className="text-lg text-gray-900">{new Date(member.registeredAt).toLocaleString()}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

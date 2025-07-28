@@ -53,8 +53,9 @@ const NoticeEditPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">공지사항 수정</h1>
-      <form onSubmit={handleSubmit}>
+      <div className="bg-white shadow-md rounded-lg p-6">
+        <h1 className="text-2xl font-bold mb-4">공지사항 수정</h1>
+        <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
             htmlFor="title"
@@ -85,22 +86,23 @@ const NoticeEditPage: React.FC = () => {
             className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-indigo-600 text-white mr-2 px-4 py-2 rounded-md hover:bg-indigo-700"
-          >
-            수정
-          </button>
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-          >
-            취소
-          </button>
-        </div>
-      </form>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-indigo-600 text-white mr-2 px-4 py-2 rounded-md hover:bg-indigo-700"
+            >
+              수정
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+            >
+              취소
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
