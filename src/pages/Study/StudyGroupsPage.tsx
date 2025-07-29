@@ -36,7 +36,7 @@ const StudyGroupsPage: React.FC = () => {
     totalPages,
     paginatedData,
     goToPage,
-  } = usePagination(filteredAndSortedData, 5);
+  } = usePagination(filteredAndSortedData, 10);
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -66,11 +66,13 @@ const StudyGroupsPage: React.FC = () => {
               paginatedData.map((studyGroup) => (
                 <tr key={studyGroup.studyGroupId} className="border-b border-gray-200 hover:bg-gray-100">
                   <td className="py-3 px-6 text-left whitespace-nowrap">{studyGroup.studyGroupId}</td>
-                  <td className="py-3 px-6 text-left">{studyGroup.studyGroupTitle}</td>
+                  <td className="py-3 px-6 text-violet-500 text-left font-bold hover:underline">
+                    <Link to={`/studies/${studyGroup.studyGroupId}`}>
+                    {studyGroup.studyGroupTitle}
+                    </Link>
+                    </td>
                   <td className="py-3 px-6 text-left">{new Date(studyGroup.studyGroupCreatedAt).toLocaleDateString()}</td>
-                  <td className="py-3 px-6 text-center">
-                    <Link to={`/studies/${studyGroup.studyGroupId}`} className="text-blue-500 hover:underline">상세보기</Link>
-                  </td>
+                  <td className='py-3 px-6 text-center'>{studyGroup.studyGroupStatus}</td>
                 </tr>
               ))
             ) : (

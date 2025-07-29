@@ -27,7 +27,8 @@ const MemberDetailPage: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">회원 상세 정보</h2>
+        <div className="border-b-2 border-blue-600 mb-4" />
+        <h1 className="text-2xl font-bold mb-4">회원 상세 정보</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col">
             <label className="text-sm font-semibold text-gray-500 mb-1">ID</label>
