@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
-import type { Notice } from '../types/responseTypes';
+import type { Notice, ProjectTeam } from '../types/responseTypes';
 import type { AxiosRequestHeaders } from 'axios';
 
 const api = axios.create({
@@ -78,6 +78,32 @@ export const updateNotice = async (id: string, notice: { noticeTitle: string; no
 
 export const deleteNotice = async (id: string): Promise<void> => {
   await api.delete(`/api/v1/notice/${id}`);
+};
+
+export const getProjectTeamMembers = async (
+  projectId: string
+): Promise<ProjectTeam[]> => {
+  const response = await api.get(`/api/v1/project/${projectId}/member`);
+  return response.data.result ?? response.data;
+};
+
+export const updateProjectTeamMember = async (
+  projectId: string,
+  teamId: string,
+  data: Partial<ProjectTeam>
+): Promise<ProjectTeam> => {
+  const response = await api.put(
+    `/api/v1/project/${projectId}/member/${teamId}`,
+    data
+  );
+  return response.data.result ?? response.data;
+};
+
+export const deleteProjectTeamMember = async (
+  projectId: string,
+  teamId: string
+): Promise<void> => {
+  await api.delete(`/api/v1/project/${projectId}/member/${teamId}`);
 };
 
 export default api;

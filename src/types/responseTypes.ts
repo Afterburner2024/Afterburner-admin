@@ -34,6 +34,25 @@ export interface Project {
   projectRegion: string;
 }
 
+// 프로젝트 팀원 정보 타입
+export interface ProjectTeam {
+  projectTeamId: number;
+  projectTeamPostId: number;
+  projectTeamUserId: number;
+  projectTeamRole: 'LEADER' | 'MANAGER' | 'MEMBER';
+  projectTeamPart:
+    | 'BACKEND'
+    | 'FRONTEND'
+    | 'FLUTTER'
+    | 'DEVOPS'
+    | 'PM'
+    | 'DESIGNER'
+    | 'PUBLISHER';
+  projectTeamMember: 'PENDING' | 'APPROVED' | 'REJECTED';
+  projectTeamJoinedAt: string;
+  projectTeamQuitedAt: string | null;
+}
+
 // 스터디 그룹 정보 타입
 export interface StudyGroup {
   studyGroupId: number;

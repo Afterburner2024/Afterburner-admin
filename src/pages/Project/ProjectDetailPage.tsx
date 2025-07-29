@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../utils/apiClient';
 import type { Project } from '../../types/responseTypes';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import ProjectTeamTable from '../../components/ProjectTeamTable';
 import { formatDate } from '../../utils/formatDate';
 
 const ProjectDetailPage: React.FC = () => {
@@ -62,6 +63,8 @@ const ProjectDetailPage: React.FC = () => {
           className="prose prose-lg max-w-none min-h-[50vh] bg-gray-50 rounded-lg p-4 sm:p-6 font-semibold"
           dangerouslySetInnerHTML={{ __html: project.projectContent }}
         />
+
+        <ProjectTeamTable projectId={id as string} />
 
         {/* Button Section */}
         <div className="mt-8 flex flex-col sm:flex-row justify-end gap-3">
