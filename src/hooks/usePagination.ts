@@ -28,5 +28,13 @@ export const usePagination = <T,>(data: T[], itemsPerPage: number = 5) => {
     [totalPages],
   );
 
-  return { currentPage, totalPages, paginatedData, goToPage };
+  const goToFirstPage = useCallback(() => {
+    setCurrentPage(1);
+  }, []);
+
+  const goToLastPage = useCallback(() => {
+    setCurrentPage(totalPages);
+  }, [totalPages]);
+
+  return { currentPage, totalPages, paginatedData, goToPage, goToFirstPage, goToLastPage };
 };

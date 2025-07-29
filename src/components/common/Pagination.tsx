@@ -18,6 +18,14 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     <div className="flex justify-center mt-4 mb-4 space-x-2">
       <button
         type="button"
+        onClick={() => onPageChange(1)}
+        disabled={currentPage === 1}
+        className="px-3 py-1 border rounded disabled:opacity-50"
+      >
+        처음
+      </button>
+      <button
+        type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className="px-3 py-1 border rounded disabled:opacity-50"
@@ -41,6 +49,14 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         className="px-3 py-1 border rounded disabled:opacity-50"
       >
         다음
+      </button>
+      <button
+        type="button"
+        onClick={() => onPageChange(totalPages)}
+        disabled={currentPage === totalPages}
+        className="px-3 py-1 border rounded disabled:opacity-50"
+      >
+        마지막
       </button>
     </div>
   );
