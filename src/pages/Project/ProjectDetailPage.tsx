@@ -50,7 +50,12 @@ const ProjectDetailPage: React.FC = () => {
           <div className="h-1 w-full bg-purple-500 rounded mb-4"></div>
           <div className="flex flex-wrap justify-between items-center text-sm text-gray-500 mt-3 gap-x-4 gap-y-1">
             <span>
-              작성자: <span className="font-medium text-gray-800">{project.projectUserId || '정보 없음'}</span>
+              작성자:{' '}
+              <span className="font-medium text-gray-800">
+                {project.projectUserName
+                  ? `${project.projectUserName} (ID: ${project.projectUserId})`
+                  : project.projectUserId || '정보 없음'}
+              </span>
             </span>
             <span>
               작성일: <span className="font-medium text-gray-700">{formatDate(project.projectCreatedAt)}</span>

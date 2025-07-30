@@ -32,6 +32,7 @@ export interface Project {
   projectTechStack: string[];
   projectRecruitmentRoles: string[];
   projectUserId: number;
+  projectUserName?: string;
   projectRegion: string;
 }
 
@@ -68,6 +69,7 @@ export interface StudyGroup {
   studyGroupStatus: string;
   studyGroupMembers: string[];
   studyGroupUserId: number;
+  studyGroupUserName?: string;
   studyGroupRole: string;
 }
 
