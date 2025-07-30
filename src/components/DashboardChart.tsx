@@ -8,22 +8,22 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { useRecentMembers } from '../hooks/useRecentMembers';
 import { useRecentProjects } from '../hooks/useRecentProjects';
 import { useRecentStudies } from '../hooks/useRecentStudies';
 import { useRecentNotices } from '../hooks/useRecentNotices';
+import { useRecentQuestions } from '../hooks/useRecentQuestions';
 
 export const DashboardChart: React.FC = () => {
-  const { data: members = [] } = useRecentMembers();
   const { data: projects = [] } = useRecentProjects();
   const { data: studies = [] } = useRecentStudies();
   const { data: notices = [] } = useRecentNotices();
+  const { data: questions = [] } = useRecentQuestions();
 
   const stats = [
-    { name: '회원', value: members.length },
     { name: '프로젝트', value: projects.length },
     { name: '스터디', value: studies.length },
     { name: '공지', value: notices.length },
+    { name: '질문', value: questions.length },
   ];
 
   return (

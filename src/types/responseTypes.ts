@@ -4,6 +4,7 @@ export interface Member {
   userName: string;
   userEmail: string;
   registeredAt: string;
+  deletedAt: string | null;
 }
 
 // 공지사항 정보 타입

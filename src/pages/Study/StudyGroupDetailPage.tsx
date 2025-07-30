@@ -79,7 +79,7 @@ const StudyGroupDetailPage: React.FC = () => {
         {/* Button Section */}
         <div className="mt-8 flex flex-col sm:flex-row justify-end gap-3">
           <button
-            onClick={() => navigate('/study')}
+            onClick={() => navigate('/studies')}
             className="w-full sm:w-auto bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-gray-700 transition duration-300"
           >
             목록으로

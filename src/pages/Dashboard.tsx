@@ -4,6 +4,7 @@ import { RecentProjectsTable } from '../components/RecentProjectsTable';
 import { RecentStudiesTable } from '../components/RecentStudiesTable';
 import { NoticesList } from '../components/NoticesList';
 import DashboardChart from '../components/DashboardChart';
+import MemberStatsChart from '../components/MemberStatsChart';
 
 const Dashboard: React.FC = () => {
   return (
@@ -14,6 +15,9 @@ const Dashboard: React.FC = () => {
       <NoticesList />
       <div className="md:col-span-2">
         <DashboardChart />
+      </div>
+      <div className="md:col-span-2">
+        <MemberStatsChart />
       </div>
     </div>
   );

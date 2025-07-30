@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
-import type { Notice, ProjectTeam } from '../types/responseTypes';
+import type { Notice, ProjectTeam, Project, StudyGroup, Question } from '../types/responseTypes';
 import type { AxiosRequestHeaders } from 'axios';
 
 const api = axios.create({
@@ -104,6 +104,36 @@ export const deleteProjectTeamMember = async (
   teamId: string
 ): Promise<void> => {
   await api.delete(`/api/v1/project/${projectId}/member/${teamId}`);
+};
+
+// 사용자별 게시글 및 참여 정보 조회 API
+export const getUserProjects = async (userId: string): Promise<Project[]> => {
+  const res = await api.get(`/api/v1/users/${userId}/projects`);
+  return res.data.result ?? res.data;
+};
+
+export const getUserParticipatedProjects = async (
+  userId: string,
+): Promise<Project[]> => {
+  const res = await api.get(`/api/v1/users/${userId}/participated-projects`);
+  return res.data.result ?? res.data;
+};
+
+export const getUserStudies = async (userId: string): Promise<StudyGroup[]> => {
+  const res = await api.get(`/api/v1/users/${userId}/studies`);
+  return res.data.result ?? res.data;
+};
+
+export const getUserParticipatedStudies = async (
+  userId: string,
+): Promise<StudyGroup[]> => {
+  const res = await api.get(`/api/v1/users/${userId}/participated-studies`);
+  return res.data.result ?? res.data;
+};
+
+export const getUserQuestions = async (userId: string): Promise<Question[]> => {
+  const res = await api.get(`/api/v1/users/${userId}/questions`);
+  return res.data.result ?? res.data;
 };
 
 export default api;
