@@ -3,16 +3,14 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from './common/LoadingSpinner';
 import { useRecentStudies } from '../hooks/useRecentStudies';
 
-
 export const RecentStudiesTable: React.FC = () => {
   const { data: studies = [], isLoading, error } = useRecentStudies();
 
-  // 생성일 순 정렬 후 상위 5개 추출
   const displayedStudies = [...studies]
     .sort(
       (a, b) =>
         new Date(b.studyGroupCreatedAt).getTime() -
-        new Date(a.studyGroupCreatedAt).getTime()
+        new Date(a.studyGroupCreatedAt).getTime(),
     )
     .slice(0, 5);
 
@@ -23,16 +21,18 @@ export const RecentStudiesTable: React.FC = () => {
     <div className="p-6 bg-white rounded-lg shadow-md fade-in">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-800">스터디그룹 글 목록</h2>
-        <Link to="/studies" className="text-sm text-indigo-600 hover:underline">더보기</Link>
+        <Link to="/studies" className="text-sm text-indigo-600 hover:underline">
+          더보기
+        </Link>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left">
-          <thead className="text-gray-500 border-b">
-            <tr>
-              <th className="pb-2">제목</th>
-              <th className="pb-2">작성자 ID</th>
-              <th className="pb-2">등록일</th>
-              <th className="pb-2">상태</th>
+        <table className="min-w-full text-left">
+          <thead>
+            <tr className="border-b">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">제목</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">등록일</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
@@ -40,16 +40,16 @@ export const RecentStudiesTable: React.FC = () => {
               displayedStudies.map((study) => (
                 <tr
                   key={study.studyGroupId}
-                  className="border-b hover:bg-indigo-50 transition-colors duration-150"
+                  className="hover:bg-indigo-50 transition-colors duration-150"
                 >
-                  <td className="py-3 font-medium text-gray-800">
-                    <Link to={`/studies/${study.studyGroupId}`} className="hover:underline text-indigo-600">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <Link to={`/studies/${study.studyGroupId}`} className="font-medium text-indigo-600 hover:underline">
                       {study.studyGroupTitle}
                     </Link>
                   </td>
-                  <td className="py-3 text-sm text-gray-600">{study.studyGroupUserId}</td>
-                  <td className="py-3 text-sm text-gray-600">{new Date(study.studyGroupCreatedAt).toLocaleDateString()}</td>
-                  <td className="py-3 text-sm text-gray-600">{study.studyGroupStatus}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{study.studyGroupUserId}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{new Date(study.studyGroupCreatedAt).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{study.studyGroupStatus}</td>
                 </tr>
               ))
             ) : (

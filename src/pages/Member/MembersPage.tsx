@@ -33,7 +33,7 @@ const MembersPage: React.FC = () => {
 
   const { currentPage, totalPages, paginatedData, goToPage } = usePagination(
     filteredAndSortedData,
-    5
+    10
   );
 
   if (isLoading) return <LoadingSpinner />;
@@ -68,7 +68,7 @@ const MembersPage: React.FC = () => {
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     ID
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-900 uppercase tracking-wider">
                     이름
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
@@ -87,22 +87,22 @@ const MembersPage: React.FC = () => {
                   paginatedData.map((member) => (
                     <tr key={member.userId} className="hover:bg-gray-50">
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
+                        <p className="text-gray-800 whitespace-no-wrap">
                           {member.userId}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
+                        <p className="text-gray-900 font-bold whitespace-no-wrap">
                           {member.userName}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
+                        <p className="text-gray-800 whitespace-no-wrap">
                           {member.userEmail}
                         </p>
                       </td>
                       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <p className="text-gray-900 whitespace-no-wrap">
+                        <p className="text-gray-800 whitespace-no-wrap">
                           {new Date(member.registeredAt).toLocaleDateString()}
                         </p>
                       </td>

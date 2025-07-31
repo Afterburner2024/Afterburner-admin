@@ -58,7 +58,6 @@ const QuestionsPage: React.FC = () => {
               <th className="py-3 px-6 text-left">ID</th>
               <th className="py-3 px-6 text-left">제목</th>
               <th className="py-3 px-6 text-left">작성일</th>
-              <th className="py-3 px-6 text-center">활동</th>
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
@@ -66,11 +65,12 @@ const QuestionsPage: React.FC = () => {
               paginatedData.map((question) => (
                 <tr key={question.qnaId} className="border-b border-gray-200 hover:bg-gray-100">
                   <td className="py-3 px-6 text-left whitespace-nowrap">{question.qnaId}</td>
-                  <td className="py-3 px-6 text-left">{question.qnaTitle}</td>
+                  <td className="py-3 px-6 text-left">
+                    <Link to={`/questions/${question.qnaId}`} className="text-violet-600 font-semibold hover:underline">
+                    {question.qnaTitle}
+                    </Link>
+                    </td>
                   <td className="py-3 px-6 text-left">{new Date(question.qnaCreatedAt).toLocaleDateString()}</td>
-                  <td className="py-3 px-6 text-center">
-                    <Link to={`/questions/${question.qnaId}`} className="text-blue-500 hover:underline">상세보기</Link>
-                  </td>
                 </tr>
               ))
             ) : (

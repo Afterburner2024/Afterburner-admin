@@ -58,22 +58,22 @@ export const fetcher = async (url: string) => {
 
 export const getNotices = async (): Promise<Notice[]> => {
   const response = await api.get('/api/v1/notice');
-  return response.data.result ?? response.data;
+  return response.data.result ?? [];
 };
 
 export const getNotice = async (id: string): Promise<Notice> => {
   const response = await api.get(`/api/v1/notice/${id}`);
-  return response.data.result ?? response.data;
+  return response.data.result ?? null;
 };
 
 export const createNotice = async (notice: { noticeTitle: string; noticeContent: string }): Promise<Notice> => {
   const response = await api.post('/api/v1/notice', notice);
-  return response.data.result ?? response.data;
+  return response.data.result ?? null;
 };
 
 export const updateNotice = async (id: string, notice: { noticeTitle: string; noticeContent: string }): Promise<Notice> => {
   const response = await api.put(`/api/v1/notice/${id}`, notice);
-  return response.data.result ?? response.data;
+  return response.data.result ?? null;
 };
 
 export const deleteNotice = async (id: string): Promise<void> => {
@@ -84,7 +84,7 @@ export const getProjectTeamMembers = async (
   projectId: string
 ): Promise<ProjectTeam[]> => {
   const response = await api.get(`/api/v1/project/${projectId}/member`);
-  return response.data.result ?? response.data;
+  return response.data.result ?? [];
 };
 
 export const updateProjectTeamMember = async (
@@ -96,7 +96,7 @@ export const updateProjectTeamMember = async (
     `/api/v1/project/${projectId}/member/${teamId}`,
     data
   );
-  return response.data.result ?? response.data;
+  return response.data.result ?? null;
 };
 
 export const deleteProjectTeamMember = async (
@@ -109,31 +109,31 @@ export const deleteProjectTeamMember = async (
 // 사용자별 게시글 및 참여 정보 조회 API
 export const getUserProjects = async (userId: string): Promise<Project[]> => {
   const res = await api.get(`/api/v1/users/${userId}/projects`);
-  return res.data.result ?? res.data;
+  return res.data.result ?? [];
 };
 
 export const getUserParticipatedProjects = async (
   userId: string,
 ): Promise<Project[]> => {
   const res = await api.get(`/api/v1/users/${userId}/participated-projects`);
-  return res.data.result ?? res.data;
+  return res.data.result ?? [];
 };
 
 export const getUserStudies = async (userId: string): Promise<StudyGroup[]> => {
   const res = await api.get(`/api/v1/users/${userId}/studies`);
-  return res.data.result ?? res.data;
+  return res.data.result ?? [];
 };
 
 export const getUserParticipatedStudies = async (
   userId: string,
 ): Promise<StudyGroup[]> => {
   const res = await api.get(`/api/v1/users/${userId}/participated-studies`);
-  return res.data.result ?? res.data;
+  return res.data.result ?? [];
 };
 
 export const getUserQuestions = async (userId: string): Promise<Question[]> => {
   const res = await api.get(`/api/v1/users/${userId}/questions`);
-  return res.data.result ?? res.data;
+  return res.data.result ?? [];
 };
 
 export default api;

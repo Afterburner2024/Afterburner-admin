@@ -12,22 +12,22 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { useMemberActivity } from '../../hooks/useMemberActivity';
 
 // ListCard 컴포넌트 props 타입 정의
-interface ListCardProps<T> {
+interface ListCardProps<T extends { [key in K | L]: string | number }, K extends keyof T, L extends keyof T> {
   title: string;
   items: T[];
-  idKey: keyof T;
-  labelKey: keyof T;
+  idKey: K;
+  labelKey: L;
   linkPrefix: string;
 }
 
 // ListCard 컴포넌트: 제네릭을 사용하여 타입 안정성 강화
-const ListCard = <T extends { [key: string]: any }>({
+const ListCard = <T extends { [key in K | L]: string | number }, K extends keyof T, L extends keyof T>({
   title,
   items,
   idKey,
   labelKey,
   linkPrefix,
-}: ListCardProps<T>) => (
+}: ListCardProps<T, K, L>) => (
   <div className="bg-white shadow-md rounded-lg p-4">
     <h2 className="text-lg font-semibold mb-2">{title}</h2>
     {items.length > 0 ? (
@@ -59,8 +59,12 @@ const MemberDetailPage: React.FC = () => {
     error: memberError,
   } = useQuery<Member, Error>({
     queryKey: ['member', id],
-    queryFn: () => api.get(`/api/v1/users/${id}`).then((res) => res.data.result),
-    enabled: !!id,
+    queryFn: () => {
+      if (!id) return Promise.reject(new Error('id is required'));
+      const numericId = parseInt(id, 10);
+      return api.get(`/api/v1/users/${numericId}`).then((res) => res.data.result);
+    },
+    enabled: !!id && !isNaN(parseInt(id, 10)),
   });
 
   // 커스텀 훅을 사용하여 유저 활동 내역 조회
@@ -123,28 +127,28 @@ const MemberDetailPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ListCard<StudyGroup>
+        <ListCard<StudyGroup, 'studyGroupId', 'studyGroupTitle'>
           title="등록한 스터디 그룹"
           items={userStudies}
           idKey="studyGroupId"
           labelKey="studyGroupTitle"
           linkPrefix="/studies/"
         />
-        <ListCard<StudyGroup>
+        <ListCard<StudyGroup, 'studyGroupId', 'studyGroupTitle'>
           title="참여한 스터디 그룹"
           items={participatedStudies}
           idKey="studyGroupId"
           labelKey="studyGroupTitle"
           linkPrefix="/studies/"
         />
-        <ListCard<Project>
+        <ListCard<Project, 'projectId', 'projectTitle'>
           title="등록한 사이드프로젝트"
           items={userProjects}
           idKey="projectId"
           labelKey="projectTitle"
           linkPrefix="/projects/"
         />
-        <ListCard<Project>
+        <ListCard<Project, 'projectId', 'projectTitle'>
           title="참여한 사이드프로젝트"
           items={participatedProjects}
           idKey="projectId"
@@ -152,7 +156,7 @@ const MemberDetailPage: React.FC = () => {
           linkPrefix="/projects/"
         />
         <div className="md:col-span-2">
-          <ListCard<Question>
+          <ListCard<Question, 'qnaId', 'qnaTitle'>
             title="작성한 질문"
             items={userQuestions}
             idKey="qnaId"

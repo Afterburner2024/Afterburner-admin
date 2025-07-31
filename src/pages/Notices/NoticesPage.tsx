@@ -56,7 +56,7 @@ const NoticesPage: React.FC = () => {
     totalPages,
     paginatedData,
     goToPage,
-  } = usePagination(filteredAndSortedData, 5);
+  } = usePagination(filteredAndSortedData, 10);
 
   const handleRegisterClick = () => {
     navigate("/notices/create");
@@ -113,7 +113,7 @@ const NoticesPage: React.FC = () => {
                   onClick={() => handleNoticeClick(notice.noticeId)}
                 >
                   <td className="py-3 px-6 text-left">{notice.noticeId}</td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap">{notice.noticeTitle}</td>
+                  <td className="py-3 px-6 text-left font-semibold text-violet-500 whitespace-nowrap">{notice.noticeTitle}</td>
                   <td className="py-3 px-6 text-left">{new Date(notice.noticeCreatedAt).toLocaleDateString()}</td>
                 </tr>
               ))
