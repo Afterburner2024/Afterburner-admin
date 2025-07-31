@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { formatDate } from "../utils/formatDate";
 import { Link } from "react-router-dom";
+import { auth } from "../utils/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 interface HeaderProps {
   onToggleSidebar: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
+  const [displayName, setDisplayName] = useState<string | null>(
+    auth.currentUser?.displayName ?? null
+  );
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setDisplayName(user?.displayName ?? null);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <header className="sticky top-0 z-10 px-6 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md flex justify-between items-center">
       <div className="flex items-center">
@@ -41,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
             <i className="fas fa-user"></i>
           </div>
-          <span className="text-sm font-medium">관리자</span>
+          <span className="text-sm font-medium">{displayName ?? "관리자"}</span>
         </div>
       </div>
     </header>

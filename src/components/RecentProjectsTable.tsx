@@ -14,9 +14,6 @@ export const RecentProjectsTable: React.FC = () => {
     )
     .slice(0, 5);
 
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <p className="text-red-500">데이터를 불러오지 못했습니다.</p>;
-
   return (
     <div className="p-6 bg-white rounded-lg shadow-md fade-in">
       <div className="flex items-center justify-between mb-4">
@@ -36,7 +33,19 @@ export const RecentProjectsTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 min-h-[280px]">
-            {displayedProjects.length > 0 ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={4} className="text-center py-10">
+                  <LoadingSpinner />
+                </td>
+              </tr>
+            ) : error ? (
+              <tr>
+                <td colSpan={4} className="text-center py-10 text-red-500">
+                  데이터를 불러오지 못했습니다.
+                </td>
+              </tr>
+            ) : displayedProjects.length > 0 ? (
               displayedProjects.map((project) => (
                 <tr
                   key={project.projectId}

@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
 import LoadingSpinner from './common/LoadingSpinner';
-import {
-  useProjectTeamMembers
-} from '../hooks/useProjectTeamMembers';
-import {
-  updateProjectTeamMember,
-  deleteProjectTeamMember
-} from '../utils/apiClient';
-import type { ProjectTeam } from '../types/responseTypes';
+import { useStudyGroupMembers } from '../hooks/useStudyGroupMembers';
+import { updateStudyGroupMember, deleteStudyGroupMember } from '../utils/apiClient';
+import type { StudyGroupMember } from '../types/responseTypes';
 
 interface Props {
-  projectId: string;
+  studyGroupId: string;
 }
 
-const statuses = ['PENDING', 'APPROVED', 'REJECTED'] as const;
+const statuses = ['PENDING', 'APPROVED', 'REJECTED', 'DELETED'] as const;
 
-const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
-  const { data: members = [], isLoading, error, refetch } =
-    useProjectTeamMembers(projectId);
+const StudyGroupMemberTable: React.FC<Props> = ({ studyGroupId }) => {
+  const { data: members = [], isLoading, error, refetch } = useStudyGroupMembers(studyGroupId);
   const [editId, setEditId] = useState<number | null>(null);
-  const [form, setForm] = useState<Partial<ProjectTeam>>({});
+  const [form, setForm] = useState<Partial<StudyGroupMember>>({});
 
-  const startEdit = (m: ProjectTeam) => {
-    setEditId(m.projectTeamId);
+  const startEdit = (m: StudyGroupMember) => {
+    setEditId(m.studyMemberId);
     setForm({
-      projectTeamMember: m.projectTeamMember,
+      studyMemberStatus: m.studyMemberStatus,
     });
   };
 
@@ -34,26 +28,26 @@ const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
   };
 
   const handleChange = (
-    field: keyof Pick<ProjectTeam, 'projectTeamMember'>,
-    value: ProjectTeam['projectTeamMember'],
+    field: keyof Pick<StudyGroupMember, 'studyMemberStatus'>,
+    value: StudyGroupMember['studyMemberStatus'],
   ) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const saveEdit = async (id: number) => {
     try {
-      await updateProjectTeamMember(projectId, String(id), form);
+      await updateStudyGroupMember(studyGroupId, String(id), form);
       cancelEdit();
       refetch();
     } catch {
-      alert('팀원 정보 수정에 실패했습니다.');
+      alert('스터디원 정보 수정에 실패했습니다.');
     }
   };
 
   const removeMember = async (id: number) => {
     if (!window.confirm('정말 삭제하시겠습니까?')) return;
     try {
-      await deleteProjectTeamMember(projectId, String(id));
+      await deleteStudyGroupMember(studyGroupId, String(id));
       refetch();
     } catch {
       alert('삭제에 실패했습니다.');
@@ -62,7 +56,7 @@ const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
 
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-semibold mb-4">팀원 목록</h2>
+      <h2 className="text-xl font-semibold mb-4">스터디원 목록</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full leading-normal">
           <thead>
@@ -85,36 +79,36 @@ const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
             ) : error ? (
               <tr>
                 <td colSpan={6} className="py-6 text-center text-red-500">
-                  팀원 정보를 불러오지 못했습니다.
+                  스터디원 정보를 불러오지 못했습니다.
                 </td>
               </tr>
             ) : members.length > 0 ? (
               members.map((m) => (
-                <tr key={m.projectTeamId} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left whitespace-nowrap">{m.projectTeamUserId}</td>
-                  <td className="py-3 px-6 text-left">{m.projectTeamUserName}</td>
-                  <td className="py-3 px-6 text-left">{m.projectTeamRole}</td>
-                  <td className="py-3 px-6 text-left">{m.projectTeamPart}</td>
+                <tr key={m.studyMemberId} className="border-b border-gray-200 hover:bg-gray-100">
+                  <td className="py-3 px-6 text-left whitespace-nowrap">{m.studyMemberUserId}</td>
+                  <td className="py-3 px-6 text-left">{m.studyMemberUserName}</td>
+                  <td className="py-3 px-6 text-left">{m.studyMemberRole}</td>
+                  <td className="py-3 px-6 text-left">{m.studyMemberPart}</td>
                   <td className="py-3 px-6 text-left">
-                    {editId === m.projectTeamId ? (
+                    {editId === m.studyMemberId ? (
                       <select
                         className="border p-1 rounded"
-                        value={form.projectTeamMember as string}
-                        onChange={(e) => handleChange('projectTeamMember', e.target.value as ProjectTeam['projectTeamMember'])}
+                        value={form.studyMemberStatus as string}
+                        onChange={(e) => handleChange('studyMemberStatus', e.target.value as StudyGroupMember['studyMemberStatus'])}
                       >
                         {statuses.map((s) => (
                           <option key={s} value={s}>{s}</option>
                         ))}
                       </select>
                     ) : (
-                      m.projectTeamMember
+                      m.studyMemberStatus
                     )}
                   </td>
                   <td className="py-3 px-6 text-center space-x-2">
-                    {editId === m.projectTeamId ? (
+                    {editId === m.studyMemberId ? (
                       <>
                         <button
-                          onClick={() => saveEdit(m.projectTeamId)}
+                          onClick={() => saveEdit(m.studyMemberId)}
                           className="px-2 py-1 bg-green-500 text-white rounded"
                         >
                           저장
@@ -135,7 +129,7 @@ const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
                           수정
                         </button>
                         <button
-                          onClick={() => removeMember(m.projectTeamId)}
+                          onClick={() => removeMember(m.studyMemberId)}
                           className="px-2 py-1 bg-red-600 text-white rounded"
                         >
                           삭제
@@ -148,7 +142,7 @@ const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
             ) : (
               <tr>
                 <td colSpan={6} className="py-6 text-center">
-                  팀원이 없습니다.
+                  스터디원이 없습니다.
                 </td>
               </tr>
             )}
@@ -159,4 +153,4 @@ const ProjectTeamTable: React.FC<Props> = ({ projectId }) => {
   );
 };
 
-export default ProjectTeamTable;
+export default StudyGroupMemberTable;

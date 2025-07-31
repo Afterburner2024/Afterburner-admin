@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../utils/apiClient';
 import type { StudyGroup } from '../../types/responseTypes';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import StudyGroupMemberTable from '../../components/StudyGroupMemberTable';
 import { formatDate } from '../../utils/formatDate';
 
 const StudyGroupDetailPage: React.FC = () => {
@@ -80,6 +81,8 @@ const StudyGroupDetailPage: React.FC = () => {
           className="prose prose-lg max-w-none min-h-[50vh] bg-gray-50 rounded-lg p-4 sm:p-6 font-semibold"
           dangerouslySetInnerHTML={{ __html: studyGroup.studyGroupContent }}
         />
+
+        <StudyGroupMemberTable studyGroupId={id as string} />
 
         {/* Button Section */}
         <div className="mt-8 flex flex-col sm:flex-row justify-end gap-3">

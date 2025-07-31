@@ -136,4 +136,23 @@ export const getUserQuestions = async (userId: string): Promise<Question[]> => {
   return res.data.result ?? [];
 };
 
+export const updateStudyGroupMember = async (
+  studyGroupId: string,
+  memberId: string,
+  data: Partial<StudyGroupMember>
+): Promise<StudyGroupMember> => {
+  const response = await api.put(
+    `/api/v1/study-group/${studyGroupId}/member/${memberId}`,
+    data
+  );
+  return response.data.result ?? null;
+};
+
+export const deleteStudyGroupMember = async (
+  studyGroupId: string,
+  memberId: string
+): Promise<void> => {
+  await api.delete(`/api/v1/study-group/${studyGroupId}/member/${memberId}`);
+};
+
 export default api;

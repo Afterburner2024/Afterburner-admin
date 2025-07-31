@@ -41,6 +41,7 @@ export interface ProjectTeam {
   projectTeamId: number;
   projectTeamPostId: number;
   projectTeamUserId: number;
+  projectTeamUserName?: string;
   projectTeamRole: 'LEADER' | 'MANAGER' | 'MEMBER';
   projectTeamPart:
     | 'BACKEND'
@@ -53,6 +54,20 @@ export interface ProjectTeam {
   projectTeamMember: 'PENDING' | 'APPROVED' | 'REJECTED';
   projectTeamJoinedAt: string;
   projectTeamQuitedAt: string | null;
+}
+
+
+// 스터디 그룹 멤버 정보 타입
+export interface StudyGroupMember {
+  studyMemberId: number;
+  studyMemberPostId: number;
+  studyMemberUserId: number;
+  studyMemberUserName?: string;
+  studyMemberPart?: string;
+  studyMemberRole: 'LEADER' | 'MANAGER' | 'MEMBER';
+  studyMemberStatus: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DELETED';
+  studyMemberJoinedAt: string;
+  studyMemberQuitedAt: string | null;
 }
 
 // 스터디 그룹 정보 타입
